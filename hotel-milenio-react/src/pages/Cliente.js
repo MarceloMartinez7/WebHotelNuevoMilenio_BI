@@ -59,6 +59,22 @@ function Cliente() {
         }
     };
 
+
+   
+  
+    const handleCedulaChange = (e) => {
+        let formattedCedula = e.target.value.replace(/[^\dA-Za-z]/g, ''); // Elimina todos los caracteres que no sean dígitos o letras
+        if (formattedCedula.length >= 3 && formattedCedula.length < 10) {
+            formattedCedula = formattedCedula.replace(/^(\d{3})(\d{6})/, '$1-$2-'); // Agrega los guiones en las posiciones adecuadas
+        } else if (formattedCedula.length >= 10 && formattedCedula.length < 14) {
+            formattedCedula = formattedCedula.replace(/^(\d{3})(\d{6})(\d{4})/, '$1-$2-$3'); // Agrega los guiones en las posiciones adecuadas
+        } else if (formattedCedula.length >= 14) {
+            formattedCedula = formattedCedula.replace(/^(\d{3})(\d{6})(\d{4})(\w)/, '$1-$2-$3$4'); // Agrega los guiones en las posiciones adecuadas
+        }
+        setCedula(formattedCedula);
+    };
+
+
     return (
         <div>
             <Header />
@@ -77,6 +93,9 @@ function Cliente() {
                                             placeholder="Ingrese el nombre"
                                             value={Nombre1}
                                             onChange={(e) => setNombre1(e.target.value)}
+                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                                            title="Ingrese solo letras"
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -88,6 +107,8 @@ function Cliente() {
                                             placeholder="Ingrese su segundo nombre"
                                             value={Nombre2}
                                             onChange={(e) => setNombre2(e.target.value)}
+                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                                            title="Ingrese solo letras"
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -99,11 +120,12 @@ function Cliente() {
                                             placeholder="Ingrese el apellido"
                                             value={Apellido1}
                                             onChange={(e) => setApellido1(e.target.value)}
+                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                                            title="Ingrese solo letras"
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
-
-
 
                                 <Col sm="6" md="6" lg="6">
                                     <FloatingLabel controlId="apellido2" label="Segundo Apellido">
@@ -112,6 +134,8 @@ function Cliente() {
                                             placeholder="Ingrese el segundo apellido"
                                             value={Apellido2}
                                             onChange={(e) => setApellido2(e.target.value)}
+                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                                            title="Ingrese solo letras"
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -122,7 +146,9 @@ function Cliente() {
                                             type="text"
                                             placeholder="Ingrese la cédula"
                                             value={Cedula}
-                                            onChange={(e) => setCedula(e.target.value)}
+                                            onChange={handleCedulaChange}
+                                            maxLength={16} // Longitud máxima de la cédula con guiones
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -134,6 +160,9 @@ function Cliente() {
                                             placeholder="Ingrese la procedencia"
                                             value={Procedencia}
                                             onChange={(e) => setProcedencia(e.target.value)}
+                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                                            title="Ingrese solo letras"
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -145,6 +174,9 @@ function Cliente() {
                                             placeholder="Ingrese el Telefono"
                                             value={Telefono}
                                             onChange={(e) => setTelefono(e.target.value)}
+                                            pattern="[0-9]+"
+                                            title="Ingrese solo números"
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
@@ -154,16 +186,14 @@ function Cliente() {
                                 <Button variant="primary" type="submit" className="mt-3 custom-button" size="lg">
                                     Registrar
                                 </Button>
-
                             </div>
-
                         </Form>
                     </Card.Body>
                 </Card>
             </Container>
-
         </div>
     );
 }
+
 
 export default Cliente;
