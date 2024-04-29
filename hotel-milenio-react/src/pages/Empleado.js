@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import '../styles/App.css';
 
 function Empleado() {
-
     // Crear un estado para cada campo del formulario
     const [Nombre1, setNombre1] = useState('');
     const [Nombre2, setNombre2] = useState('');
@@ -51,7 +50,7 @@ function Empleado() {
                 setUsuario('');
                 setTelefono('');
             } else {
-                alert('Error al registrar el cliente');
+                alert('Error al registrar el empleado');
             }
         } catch (error) {
             console.error('Error en la solicitud:', error);
@@ -62,14 +61,12 @@ function Empleado() {
     return (
         <div>
             <Header />
-
             <Container>
                 <Card className="mt-3">
                     <Card.Body>
                         <Card.Title>Registro de Empleado</Card.Title>
                         <Form className="mt-3" onSubmit={handleSubmit}>
                             <Row className="g-3">
-
                                 <Col sm="6" md="6" lg="6">
                                     <FloatingLabel controlId="nombre" label="Nombre">
                                         <Form.Control
@@ -77,10 +74,12 @@ function Empleado() {
                                             placeholder="Ingrese el nombre"
                                             value={Nombre1}
                                             onChange={(e) => setNombre1(e.target.value)}
+                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                                            title="Ingrese solo letras"
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
-
                                 <Col sm="6" md="6" lg="6">
                                     <FloatingLabel controlId="nombre2" label="Segundo Nombre">
                                         <Form.Control
@@ -88,10 +87,11 @@ function Empleado() {
                                             placeholder="Ingrese su segundo nombre"
                                             value={Nombre2}
                                             onChange={(e) => setNombre2(e.target.value)}
+                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                                            title="Ingrese solo letras"
                                         />
                                     </FloatingLabel>
                                 </Col>
-
                                 <Col sm="6" md="6" lg="6">
                                     <FloatingLabel controlId="apellido" label="Apellido">
                                         <Form.Control
@@ -99,12 +99,12 @@ function Empleado() {
                                             placeholder="Ingrese el apellido"
                                             value={Apellido1}
                                             onChange={(e) => setApellido1(e.target.value)}
+                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                                            title="Ingrese solo letras"
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
-
-
-
                                 <Col sm="6" md="6" lg="6">
                                     <FloatingLabel controlId="apellido2" label="Segundo Apellido">
                                         <Form.Control
@@ -112,10 +112,11 @@ function Empleado() {
                                             placeholder="Ingrese el segundo apellido"
                                             value={Apellido2}
                                             onChange={(e) => setApellido2(e.target.value)}
+                                            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                                            title="Ingrese solo letras"
                                         />
                                     </FloatingLabel>
                                 </Col>
-
                                 <Col sm="12" md="6" lg="6">
                                     <FloatingLabel controlId="Usuario" label="Usuario">
                                         <Form.Control
@@ -123,21 +124,21 @@ function Empleado() {
                                             placeholder="Ingrese el Usuario"
                                             value={Usuario}
                                             onChange={(e) => setUsuario(e.target.value)}
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
-
                                 <Col sm="12" md="6" lg="6">
                                     <FloatingLabel controlId="Contraseña" label="Contraseña">
                                         <Form.Control
                                             type="password"
-                                            placeholder="Ingrese la procedencia"
+                                            placeholder="Ingrese la contraseña"
                                             value={Contraseña}
                                             onChange={(e) => setContraseña(e.target.value)}
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
-
                                 <Col sm="12" md="12" lg="12">
                                     <FloatingLabel controlId="telefono" label="Telefono">
                                         <Form.Control
@@ -145,23 +146,22 @@ function Empleado() {
                                             placeholder="Ingrese el Telefono"
                                             value={Telefono}
                                             onChange={(e) => setTelefono(e.target.value)}
+                                            pattern="[0-9]+"
+                                            title="Ingrese solo números"
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Col>
-
                             </Row>
                             <div className="center-button">
                                 <Button variant="primary" type="submit" className="mt-3 custom-button" size="lg">
                                     Registrar
                                 </Button>
-
                             </div>
-
                         </Form>
                     </Card.Body>
                 </Card>
             </Container>
-
         </div>
     );
 }

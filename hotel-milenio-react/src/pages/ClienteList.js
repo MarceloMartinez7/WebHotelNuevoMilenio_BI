@@ -114,15 +114,7 @@ function ClienteList({ handleClienteSelect }) {
     }
   };
 
-  // Nueva función para seleccionar un cliente
-const handleSelectCliente = (idCliente, nombre, apellido) => {
-  handleClienteSelect({
-    ID_cliente: idCliente,
-    Nombre1: nombre,
-    Apellido1: apellido,
-  });
-};
-
+  
 
   useEffect(() => {
     loadClientes();
@@ -163,20 +155,19 @@ const handleSelectCliente = (idCliente, nombre, apellido) => {
               <tbody>
                 {filteredClientes.map((cliente) => (
                   <tr key={cliente.ID_cliente}>
-                    <td>{cliente.ID_cliente}</td>
-                    <td>{cliente.Cedula}</td>
-                    <td>{cliente.Nombre1}</td>
-                    <td>{cliente.Nombre2}</td>
-                    <td>{cliente.Apellido1}</td>
-                    <td>{cliente.Apellido2}</td>
-                    <td>{cliente.Telefono}</td>
-                    <td>{cliente.Procedencia}</td>
-                    <td>
+                  <td>{cliente.ID_cliente}</td>
+                  <td>{cliente.Cedula}</td>
+                  <td>{cliente.Nombre1}</td>
+                  <td>{cliente.Nombre2}</td>
+                  <td>{cliente.Apellido1}</td>
+                  <td>{cliente.Apellido2}</td>
+                  <td>{cliente.Telefono}</td>
+                  <td>{cliente.Procedencia}</td>
+                  <td>
                     <Button className="update-button" onClick={() => openModal(cliente)}>Actualizar<FaPencil /></Button>
-<Button className="delete-button" onClick={() => handleDelete(cliente.ID_cliente, cliente.ID_Persona)}>Eliminar <FaTrashCan /></Button>
-<Button className="select-button" onClick={() => handleSelectCliente(cliente.ID_cliente, cliente.Nombre1, cliente.Apellido1)}>Seleccionar</Button>
-                    </td>
-                  </tr>
+                    <Button className="delete-button" onClick={() => handleDelete(cliente.ID_cliente, cliente.ID_Persona)}>Eliminar <FaTrashCan /></Button>
+                  </td>
+                </tr>
                 ))}
               </tbody>
             </Table>

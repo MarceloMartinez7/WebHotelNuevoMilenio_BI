@@ -12,6 +12,7 @@ import ReservacionesList from './pages/ReservacionesList';
 import Habitacion from './pages/Habitacion';
 
 
+
 import Servicio from './pages/Servicios';
 import ServicioList from './pages/ServiciosList';
 
@@ -41,6 +42,7 @@ function App() {
 
         <Route path="/servicios" element={<Servicio />} />
         <Route path="/listarservicios" element={<ServicioList />} />
+
         <Route path="/Reportes" element={<Estadisticas />} />
       </Routes>
     </Router>

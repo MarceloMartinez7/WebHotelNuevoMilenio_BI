@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Container, FloatingLabel, Card, Button, Modal } from 'react-bootstrap';
 import Header from '../components/Header';
-import ClienteList from './ClienteList';
-
-
+import { FaSistrix, FaPlus } from 'react-icons/fa'; // Importa los iconos de Font Awesome
 
 function ReservacionEstancia() {
-    const [showClientListModal, setShowClientListModal] = useState(false);
-    const [selectedCliente, setSelectedCliente] = useState({});
+
     const [formData, setFormData] = useState({
         ID_cliente: "",
         F_entrada: "",
@@ -25,7 +22,52 @@ function ReservacionEstancia() {
     const [habitacionesSeleccionadas, setHabitacionesSeleccionadas] = useState([]);
     const [duracionEstancia, setDuracionEstancia] = useState(0);
 
+    const [searchQueryCliente, setSearchQueryCliente] = useState('');
+    const [clientes, setClientes] = useState([]);
+    const [selectedCliente, setSelectedCliente] = useState(null);
+    const [showClientesModal, setShowClientesModal] = useState(false);
 
+    const loadClientes = () => {
+        fetch('http://localhost:5000/crud/ListarClientes')
+            .then((response) => response.json())
+            .then((data) => setClientes(data))
+            .catch((error) => console.error('Error al obtener los clientes y personas:', error));
+    };
+
+    useEffect(() => {
+        loadClientes();
+    }, []);
+
+    const openBrandModal = () => {
+        setShowClientesModal(true);
+    };
+
+    const closeBrandModal = () => {
+        setSearchQueryCliente('');
+        setShowClientesModal(false);
+    };
+
+    const handleSearchCliente = (e) => {
+        setSearchQueryCliente(e.target.value);
+    };
+
+    const filterClientes = clientes.filter((cliente) => {
+        const nombre1 = cliente.Nombre1 ? cliente.Nombre1.toLowerCase() : '';
+        const apellido1 = cliente.Apellido ? cliente.Apellido.toLowerCase() : '';
+        const cedula = cliente.Cedula ? cliente.Cedula.toLowerCase() : '';
+        const search = searchQueryCliente.toLowerCase();
+        return nombre1.includes(search) || apellido1.includes(search) || cedula.includes(search);
+    });
+
+
+    const handleClienteSelect = (cliente) => {
+        setSelectedCliente(cliente);
+        setFormData({
+            ...formData,
+            ID_cliente: cliente.ID_cliente,
+        });
+        closeBrandModal();
+    };
 
     useEffect(() => {
         fetch('http://localhost:5000/crud/ComboHabitacion')
@@ -64,7 +106,7 @@ function ReservacionEstancia() {
     const addHabitacionToTable = () => {
         if (Habitacion) {
             const habitacionSeleccionada = habitaciones.find(habitacion => habitacion.NombreHabitacion === Habitacion);
-    
+
             if (habitacionSeleccionada) {
                 setHabitacionesSeleccionadas([...habitacionesSeleccionadas, habitacionSeleccionada]);
                 setHabitaciones(habitaciones.filter(habitacion => habitacion.ID_Habitacion !== habitacionSeleccionada.ID_Habitacion));
@@ -72,7 +114,6 @@ function ReservacionEstancia() {
             }
         }
     };
-    
 
     const handleFechaSalidaChange = (e) => {
         const { name, value } = e.target;
@@ -113,13 +154,12 @@ function ReservacionEstancia() {
     const formattedSalida = formData.F_salida ? formatDate(formData.F_salida) : '';
 
     const reservaData = {
-        ID_cliente: selectedCliente.ID_cliente,
+        ID_cliente: selectedCliente ? selectedCliente.ID_cliente : '',
         F_entrada: formattedEntrada,
         F_salida: formattedSalida,
         ID_Empleado: Empleado,
         TipoServicio: formData.TipoServicio,
         habitaciones: habitacionesSeleccionadas.map((habitacion) => habitacion.ID_Habitacion),
-
     };
 
     function formatDate(dateString) {
@@ -129,19 +169,19 @@ function ReservacionEstancia() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         // Validar si las habitaciones seleccionadas están ocupadas
         const habitacionOcupada = habitacionesSeleccionadas.some(habitacion => habitacion.EstadoHabitacion === "Ocupado");
-        
+
         if (habitacionOcupada) {
             alert('Una o más habitaciones seleccionadas están ocupadas y no se pueden registrar.');
             return; // Evitar continuar con el registro
         }
-        
+
         console.log('handleSubmit iniciado');
         console.log('formData:', formData);
         console.log('reservaData:', reservaData);
-    
+
         try {
             const response = await fetch('http://localhost:5000/crud/reservacionCreate', {
                 method: 'POST',
@@ -150,7 +190,7 @@ function ReservacionEstancia() {
                 },
                 body: JSON.stringify(reservaData),
             });
-    
+
             if (response.ok) {
                 alert('Registro exitoso');
             } else {
@@ -161,8 +201,6 @@ function ReservacionEstancia() {
             alert('Hubo un error al enviar la solicitud.');
         };
     };
-    
-
     return (
         <div>
             <Header />
@@ -174,26 +212,31 @@ function ReservacionEstancia() {
                             <Row className="g-3">
 
 
-                                <Col sm="6" md="6" lg="6">
-                                    <FloatingLabel controlId="idCliente" label="Cliente">
+                              
+
+
+                                <Col sm="12" md="6" lg="6">
+                                    <FloatingLabel controlId="cliente" label="Cliente">
                                         <Form.Control
                                             type="text"
-                                            value={
-                                                selectedCliente.ID_cliente
-                                                    ? `${selectedCliente.ID_cliente} - ${selectedCliente.Nombre1} ${selectedCliente.Apellido1}`
-                                                    : ''
-                                            }
-                                            disabled
+                                            placeholder="Cliente seleccionado"
+                                            value={selectedCliente ? `${selectedCliente.Nombre1} ${selectedCliente.Apellido1}` : ''}
+                                            readOnly
                                         />
-                                        <Button
-                                            variant="primary"
-                                            className="custom-client-button" // Agrega una clase personalizada al botón
-                                            onClick={() => setShowClientListModal(true)}
-                                        >
-                                            Seleccionar Cliente
-                                        </Button>
+                                        <div className="button-container">
+                                            <Button className="show-button w-100" variant="primary" onClick={openBrandModal}>
+                                                Seleccionar cliente
+                                            </Button>
+                                        </div>
                                     </FloatingLabel>
                                 </Col>
+
+
+
+
+
+
+
 
 
                                 <Col sm="6" md="6" lg="6">
@@ -319,14 +362,35 @@ function ReservacionEstancia() {
                 </Card>
             </Container>
 
-            <Modal show={showClientListModal} onHide={() => setShowClientListModal(false)} size="xl">
+
+            <Modal show={showClientesModal} onHide={closeBrandModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Seleccionar Cliente</Modal.Title>
                 </Modal.Header>
+                <Row className="mt-3">
+                    <Col className='search-input'>
+                        <FloatingLabel controlId="search" label="Buscar">
+                            <Form.Control
+                                type="text"
+                                placeholder="Buscar"
+                                value={searchQueryCliente}
+                                onChange={handleSearchCliente}
+
+                            />
+                        </FloatingLabel>
+                    </Col>
+                </Row>
                 <Modal.Body>
-                    <ClienteList handleClienteSelect={setSelectedCliente} />
+                    {filterClientes.map((cliente) => (
+                        <div className="Seleccion" key={cliente.ID_cliente} onClick={() => handleClienteSelect(cliente)}>
+                            <span style={{ cursor: 'pointer' }}>{cliente.Nombre1} {cliente.Apellido} {cliente.Apellido2} - {cliente.Cedula}</span>
+                        </div>
+                    ))}
                 </Modal.Body>
             </Modal>
+
+
+
 
             <Container>
                 <h2 className='NameHabitacionesTabla'>Habitaciones Seleccionadas:</h2>
@@ -339,7 +403,7 @@ function ReservacionEstancia() {
                             <th>Numero de cama</th>
                             <th>Estado</th>
                             <th>Precio</th>
-                            <th>Eliminar</th> {/* Agrega una columna para el botón "Eliminar" */}
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
