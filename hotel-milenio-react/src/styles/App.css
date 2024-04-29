@@ -13,11 +13,11 @@
 }
 
 .custom-button {
-  background-color: #b48726; 
-  color: #ffffff; 
+  background-color: #dda90d; 
+  color: #000000; 
   transition: none;
   &:hover {
-      background-color: rgb(224, 178, 41); 
+      background-color: rgb(218, 172, 22); 
       color: #ffffff; 
   }
   
@@ -59,4 +59,6 @@ font-family: 'Times New Roman', Times, serif;
   max-width: 600px; /* Limita el ancho máximo del cuadro */
   margin: 150px auto; /* Centra el cuadro en el medio */
 }
+
+
 

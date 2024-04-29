@@ -1,0 +1,72 @@
+/* Estilos para el modal */
+.modal-content {
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 0 50px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #dda90d, #bebdbd); /* Gradiente dorado a gris claro */
+    font-family: Georgia, serif; /* Fuente serif */
+    border: 1px solid #000000; /* Borde dorado */
+    padding: 20px;
+    animation: fadeIn 0.3s ease, slideIn 0.5s ease; /* Animaciones de aparición y desplazamiento */
+    overflow-y: hidden; /* Oculta la barra de desplazamiento vertical */
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 20px;
+    background: linear-gradient(135deg, #dda90d, #bebdbd); /* Gradiente dorado a gris claro */
+    color: #000000; /* Texto negro */
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 0 2px 4px rgb(0, 0, 0); /* Sombreado ligero */
+}
+
+.modal-title {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Estilos para la lista de clientes */
+.cliente-list {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.cliente-item {
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Transición suave */
+    border-bottom: 1px solid #dddddd; /* Borde gris claro */
+}
+
+.cliente-item:last-child {
+    border-bottom: none;
+}
+
+.cliente-item:hover {
+    background-color: #e0e0e0; /* Color gris claro al pasar el mouse */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombreado ligero al pasar el mouse */
+    transform: scale(1.05); /* Escala ligeramente al pasar el mouse */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

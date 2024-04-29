@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Container, FloatingLabel, Card, Button, Modal } from 'react-bootstrap';
 import Header from '../components/Header';
-import { FaSistrix, FaPlus } from 'react-icons/fa'; // Importa los iconos de Font Awesome
+import '../styles/Reservacion.css';
 
 function ReservacionEstancia() {
 
@@ -212,7 +212,7 @@ function ReservacionEstancia() {
                             <Row className="g-3">
 
 
-                              
+
 
 
                                 <Col sm="12" md="6" lg="6">
@@ -363,31 +363,31 @@ function ReservacionEstancia() {
             </Container>
 
 
-            <Modal show={showClientesModal} onHide={closeBrandModal}>
+            <Modal show={showClientesModal} onHide={closeBrandModal} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Seleccionar Cliente</Modal.Title>
                 </Modal.Header>
-                <Row className="mt-3">
-                    <Col className='search-input'>
-                        <FloatingLabel controlId="search" label="Buscar">
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formBasicSearch">
                             <Form.Control
                                 type="text"
                                 placeholder="Buscar"
                                 value={searchQueryCliente}
                                 onChange={handleSearchCliente}
-
                             />
-                        </FloatingLabel>
-                    </Col>
-                </Row>
-                <Modal.Body>
-                    {filterClientes.map((cliente) => (
-                        <div className="Seleccion" key={cliente.ID_cliente} onClick={() => handleClienteSelect(cliente)}>
-                            <span style={{ cursor: 'pointer' }}>{cliente.Nombre1} {cliente.Apellido} {cliente.Apellido2} - {cliente.Cedula}</span>
-                        </div>
-                    ))}
+                        </Form.Group>
+                    </Form>
+                    <div className="cliente-list">
+                        {filterClientes.map((cliente) => (
+                            <div className="cliente-item" key={cliente.ID_cliente} onClick={() => handleClienteSelect(cliente)}>
+                                <span>{cliente.Nombre1} {cliente.Apellido} {cliente.Apellido2} - {cliente.Cedula}</span>
+                            </div>
+                        ))}
+                    </div>
                 </Modal.Body>
             </Modal>
+
 
 
 
