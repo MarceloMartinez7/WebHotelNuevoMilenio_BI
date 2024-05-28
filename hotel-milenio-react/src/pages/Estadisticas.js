@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Header from '../components/Header';
-import { Button, Row, Col, Card, Container } from 'react-bootstrap';
 import jsPDF from 'jspdf';
-import Chart from 'chart.js/auto';
-import '../styles/App.css';
 import html2canvas from 'html2canvas';
+import Chart from 'chart.js/auto';
 
 function Estadisticas() {
   const [productos, setProductos] = useState([]);
@@ -64,9 +63,9 @@ function Estadisticas() {
   useEffect(() => {
     if (reservacionesPorCliente.length > 0) {
       if (reservationsChartRef.current !== null) {
-        reservationsChartRef.current.destroy(); // Destruir gráfico existente si hay uno
+        reservationsChartRef.current.destroy(); 
       }
-      createReservationsChart(); // Crear nuevo gráfico
+      createReservationsChart(); 
     }
   }, [reservacionesPorCliente]);
 
@@ -115,8 +114,7 @@ function Estadisticas() {
       }
     });
 
-    setMyChart(chart);
-    reservationsChartRef.current = chart; // Actualizar la referencia con el nuevo gráfico
+    reservationsChartRef.current = chart; 
   };
 
   const generarReporteAlmacen = () => {
@@ -210,10 +208,12 @@ function Estadisticas() {
                 <Button onClick={generarReporteAlmacen}>
                   Generar reporte
                 </Button>
+                <Button onClick={generarReporteAlmacenImg}>
+                  Generar reporte con imagen
+                </Button>
               </Card.Body>
             </Card>
           </Col>
-
 
           <Col sm="6" md="6" lg="4">
             <Card>
@@ -225,24 +225,29 @@ function Estadisticas() {
                 <Button onClick={generarReporteClientes}>
                   Generar reporte
                 </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-
-
-          <Col sm="6" md="6" lg="4">
-            <Card>
-              <Card.Body>
-                <Card.Title>Estado de Reserva</Card.Title>
-              </Card.Body>
-              <Card.Body>
-                <Button onClick={generarReporteAlmacenImg}>
+                <Button onClick={generarReporteReservacionesImg}>
                   Generar reporte con imagen
                 </Button>
               </Card.Body>
             </Card>
           </Col>
-        
+
+          <Col sm="12" md="12" lg="12">
+            <Card>
+              <Card.Body>
+                <Card.Title>Estado del almacen</Card.Title>
+                <iframe
+                  title="HotelMilenioKpiPrueba1"
+                  width="100%"
+                  height="600"
+                  src="https://app.powerbi.com/view?r=eyJrIjoiNTRmY2IyYWMtMTQ1OC00NDQ3LTg0YTMtYzJjODM2NjUzMDQxIiwidCI6ImU0NzY0NmZlLWRhMjctNDUxOC04NDM2LTVmOGIxNThiYTEyNyIsImMiOjR9"
+                  frameborder="0"
+                  allowFullScreen="true"
+                  style={{ display: 'block', margin: '0 auto' }}
+                ></iframe>
+              </Card.Body>
+            </Card>
+          </Col>
         </Row>
       </Container>
     </div>
