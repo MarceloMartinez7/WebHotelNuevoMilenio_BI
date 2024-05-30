@@ -5,7 +5,11 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
-app.use(express.json({limit: '50mb'}))
+// Configuración de CORS
+app.use(cors());
+
+// Agregar configuración para analizar solicitudes JSON con un límite de tamaño
+app.use(express.json({ limit: '50mb' }));
 
 // Configuración de la conexión a la base de datos
 const db = mysql.createConnection({
@@ -19,23 +23,32 @@ db.connect((err) => {
   if (err) {
     console.error('Error de conexión a la base de datos:', err);
   } else {
-    console.log('Conexión exitosa a la base de datos');
+    console.log('Conexión exitosa a la base de datos db_hotelmilenio');
   }
 });
 
-// Configuración de CORS
-app.use(cors());
-
-// Agregar configuración para analizar solicitudes JSON
-app.use(express.json());
-
-// Iniciar el servidor
-app.listen(port, () => {
-  console.log(`Servidor backend en funcionamiento en el puerto ${port}`);
+const db2 = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'Marcelox2021',
+  database: 'hechosmilenio',
 });
 
-const crudRoutes = require('./routes/crudRoutes.js')(db);
+db2.connect((err) => {
+  if (err) {
+    console.error('Error de conexión a la segunda base de datos:', err);
+  } else {
+    console.log('Conexión exitosa a la segunda base de datos hechosmilenio');
+  }
+});
+
+// Importar y usar rutas para la primera base de datos
+const crudRoutes = require('./routes/crudRoutes')(db);
 app.use('/crud', crudRoutes);
+
+// Importar y usar rutas para la segunda base de datos
+const crudRoutesDb2 = require('./routes/crudRoutesDb2')(db2);
+app.use('/crudDb2', crudRoutesDb2);
 
 // Manejador de errores para errores de análisis JSON
 app.use((err, req, res, next) => {
@@ -45,3 +58,10 @@ app.use((err, req, res, next) => {
     next();
   }
 });
+
+// Iniciar el servidor
+app.listen(port, () => {
+  console.log(`Servidor backend en funcionamiento en el puerto ${port}`);
+});
+
+
