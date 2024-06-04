@@ -9,7 +9,9 @@ function Estadisticas() {
   const [productos, setProductos] = useState([]);
   const [myChart, setMyChart] = useState(null);
   const [reservacionesPorCliente, setReservacionesPorCliente] = useState([]);
-  const reservationsChartRef = useRef(null); // Referencia para el gráfico de reservaciones
+  const [ocupacionPorDia, setOcupacionPorDia] = useState([]);
+  const reservationsChartRef = useRef(null);
+  const ocupacionChartRef = useRef(null);
 
   useEffect(() => {
     fetch('http://localhost:5000/crud/ReservacionesPorCliente')
@@ -117,6 +119,67 @@ function Estadisticas() {
     reservationsChartRef.current = chart; 
   };
 
+  useEffect(() => {
+    fetch('http://localhost:5000/crudDb2/TasaOcupacionPorDiaSemana')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Datos de ocupación recibidos:', data);
+        setOcupacionPorDia(data);
+      })
+      .catch((error) => console.error('Error al obtener los datos de ocupación por día:', error));
+  }, []);
+
+  useEffect(() => {
+    if (ocupacionPorDia.length > 0) {
+      if (ocupacionChartRef.current !== null) {
+        ocupacionChartRef.current.destroy();
+      }
+      createOcupacionChart();
+    }
+  }, [ocupacionPorDia]);
+
+  const createOcupacionChart = () => {
+    const ctx = document.getElementById('ocupacionChart');
+    const labels = ocupacionPorDia.map((dia) => dia.DiaSemana);
+    const data = ocupacionPorDia.map((dia) => dia.TasaOcupacionPorDiaSemana);
+
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Tasa de Ocupación por Día de la Semana (%)',
+          data: data,
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) => `${value}%`
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Tasa de Ocupación por Día de la Semana'
+          }
+        }
+      }
+    });
+
+    ocupacionChartRef.current = chart;
+  };
+
   const generarReporteAlmacen = () => {
     fetch('http://localhost:5000/crud/RegistroEstadistica')
       .then((response) => response.json())
@@ -219,7 +282,7 @@ function Estadisticas() {
             <Card>
               <Card.Body>
                 <Card.Title>Reservaciones cliente</Card.Title>
-                <canvas id="myReservations" height="120"></canvas>
+                <canvas id="myReservations" height="300"></canvas>
               </Card.Body>
               <Card.Body>
                 <Button onClick={generarReporteClientes}>
@@ -228,6 +291,15 @@ function Estadisticas() {
                 <Button onClick={generarReporteReservacionesImg}>
                   Generar reporte con imagen
                 </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col sm="6" md="6" lg="4">
+            <Card>
+              <Card.Body>
+                <Card.Title>Tasa de Ocupación por Día de la Semana</Card.Title>
+                <canvas id="ocupacionChart" height="300"></canvas>
               </Card.Body>
             </Card>
           </Col>
