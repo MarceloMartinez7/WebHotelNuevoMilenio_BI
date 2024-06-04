@@ -13,6 +13,7 @@ function Estadisticas() {
   const reservationsChartRef = useRef(null);
   const ocupacionChartRef = useRef(null);
   const [tasaOcupacionPorTemporada, setTasaOcupacionPorTemporada] = useState([]);
+  const [reservasPorTipoHabitacion, setReservasPorTipoHabitacion] = useState([]);
 
 
   useEffect(() => {
@@ -155,6 +156,23 @@ function Estadisticas() {
       createTasaOcupacionPorTemporadaChart();
     }
   }, [tasaOcupacionPorTemporada]);
+  
+
+  useEffect(() => {
+    fetch('http://localhost:5000/crudDb2/NumeroReservasPorTipoHabitacion')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Datos de reservas por tipo de habitación recibidos:', data);
+        setReservasPorTipoHabitacion(data);
+      })
+      .catch((error) => console.error('Error al obtener los datos de reservas por tipo de habitación:', error));
+  }, []);
+  
+  useEffect(() => {
+    if (reservasPorTipoHabitacion.length > 0) {
+      createReservasPorTipoHabitacionChart();
+    }
+  }, [reservasPorTipoHabitacion]);
   
 
   const createOcupacionChart = () => {
@@ -315,7 +333,43 @@ function Estadisticas() {
     });
   };
   
-
+  const createReservasPorTipoHabitacionChart = () => {
+    const ctx = document.getElementById('reservasPorTipoHabitacionChart');
+    const labels = reservasPorTipoHabitacion.map((item) => item.Tipo_Habitacion);
+    const data = reservasPorTipoHabitacion.map((item) => item.NumeroReservas);
+  
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Número de Reservas',
+          data: data,
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Número de Reservas por Tipo de Habitación'
+          }
+        }
+      }
+    });
+  };
+  
 
 
 
@@ -367,8 +421,6 @@ function Estadisticas() {
             </Card>
           </Col>
 
-
-
           <Col sm="6" md="6" lg="4">
           <Card>
             <Card.Body>
@@ -378,8 +430,14 @@ function Estadisticas() {
           </Card>
         </Col>
 
-
-
+              <Col sm="6" md="6" lg="4">
+        <Card>
+          <Card.Body>
+            <Card.Title>Número de Reservas por Tipo de Habitación</Card.Title>
+            <canvas id="reservasPorTipoHabitacionChart" height="300"></canvas>
+          </Card.Body>
+        </Card>
+      </Col>
 
 
           <Col sm="12" md="12" lg="12">
