@@ -12,6 +12,8 @@ function Estadisticas() {
   const [ocupacionPorDia, setOcupacionPorDia] = useState([]);
   const reservationsChartRef = useRef(null);
   const ocupacionChartRef = useRef(null);
+  const [tasaOcupacionPorTemporada, setTasaOcupacionPorTemporada] = useState([]);
+
 
   useEffect(() => {
     fetch('http://localhost:5000/crud/ReservacionesPorCliente')
@@ -138,6 +140,23 @@ function Estadisticas() {
     }
   }, [ocupacionPorDia]);
 
+  useEffect(() => {
+    fetch('http://localhost:5000/crudDb2/TasaOcupacionPorTemporada')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Datos de tasa de ocupación por temporada recibidos:', data);
+        setTasaOcupacionPorTemporada(data);
+      })
+      .catch((error) => console.error('Error al obtener los datos de tasa de ocupación por temporada:', error));
+  }, []);
+
+  useEffect(() => {
+    if (tasaOcupacionPorTemporada.length > 0) {
+      createTasaOcupacionPorTemporadaChart();
+    }
+  }, [tasaOcupacionPorTemporada]);
+  
+
   const createOcupacionChart = () => {
     const ctx = document.getElementById('ocupacionChart');
     const labels = ocupacionPorDia.map((dia) => dia.DiaSemana);
@@ -256,6 +275,50 @@ function Estadisticas() {
     }
   };
 
+  const createTasaOcupacionPorTemporadaChart = () => {
+    const ctx = document.getElementById('tasaOcupacionPorTemporadaChart');
+    const labels = tasaOcupacionPorTemporada.map((item) => item.Temporada);
+    const data = tasaOcupacionPorTemporada.map((item) => item.TasaOcupacionPorTemporada);
+  
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Tasa de Ocupación por Temporada (%)',
+          data: data,
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) => `${value}%`
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Tasa de Ocupación por Temporada'
+          }
+        }
+      }
+    });
+  };
+  
+
+
+
+
   return (
     <div>
       <Header />
@@ -303,6 +366,21 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
+
+
+
+          <Col sm="6" md="6" lg="4">
+          <Card>
+            <Card.Body>
+              <Card.Title>Tasa de Ocupación por Temporada</Card.Title>
+              <canvas id="tasaOcupacionPorTemporadaChart" height="300"></canvas>
+            </Card.Body>
+          </Card>
+        </Col>
+
+
+
+
 
           <Col sm="12" md="12" lg="12">
             <Card>
