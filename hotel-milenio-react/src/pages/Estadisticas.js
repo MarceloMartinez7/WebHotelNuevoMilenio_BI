@@ -14,6 +14,7 @@ function Estadisticas() {
   const ocupacionChartRef = useRef(null);
   const [tasaOcupacionPorTemporada, setTasaOcupacionPorTemporada] = useState([]);
   const [reservasPorTipoHabitacion, setReservasPorTipoHabitacion] = useState([]);
+  const [ingresosTotalesPorTemporada, setIngresosTotalesPorTemporada] = useState([]);
 
 
   useEffect(() => {
@@ -174,6 +175,18 @@ function Estadisticas() {
     }
   }, [reservasPorTipoHabitacion]);
   
+
+
+  useEffect(() => {
+    fetch('http://localhost:5000/crudDb2/IngresosTotalesPorTemporada')
+      .then(response => response.json())
+      .then(data => {
+        setIngresosTotalesPorTemporada(data);
+      })
+      .catch(error => console.error('Error al obtener los datos de ingresos totales por temporada:', error));
+  }, []);
+  
+
 
   const createOcupacionChart = () => {
     const ctx = document.getElementById('ocupacionChart');
@@ -370,7 +383,49 @@ function Estadisticas() {
     });
   };
   
-
+  useEffect(() => {
+    if (ingresosTotalesPorTemporada.length > 0) {
+      const ctx = document.getElementById('ingresosTotalesPorTemporadaChart');
+      const labels = ingresosTotalesPorTemporada.map((item) => item.Temporada);
+      const data = ingresosTotalesPorTemporada.map((item) => item.IngresosTotales);
+  
+      const ingresosChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Ingresos Totales',
+            data: data,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Ingresos Totales por Temporada'
+            }
+          }
+        }
+      });
+  
+      return () => {
+        ingresosChart.destroy();
+      };
+    }
+  }, [ingresosTotalesPorTemporada]);
+  
 
 
   return (
@@ -435,6 +490,16 @@ function Estadisticas() {
           <Card.Body>
             <Card.Title>Número de Reservas por Tipo de Habitación</Card.Title>
             <canvas id="reservasPorTipoHabitacionChart" height="300"></canvas>
+          </Card.Body>
+        </Card>
+      </Col>
+
+
+            <Col sm="6" md="6" lg="4">
+        <Card>
+          <Card.Body>
+            <Card.Title>Ingresos Totales por Temporada</Card.Title>
+            <canvas id="ingresosTotalesPorTemporadaChart" height="300"></canvas>
           </Card.Body>
         </Card>
       </Col>
