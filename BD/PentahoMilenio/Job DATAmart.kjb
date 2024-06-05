@@ -19,7 +19,7 @@
     <database>HechosMilenio</database>
     <port>3306</port>
     <username>root</username>
-    <password>Encrypted 2be98afc86aa7f2bdaa14a77cd9c4fd8a</password>
+    <password>Encrypted 2be98afc827c68087ae15a1688cc2fd8b</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -82,7 +82,7 @@
     <database>HechosMilenio</database>
     <port>3306</port>
     <username>root</username>
-    <password>Encrypted 2be98afc86aa7f2bdaa14a77cd9c4fd8a</password>
+    <password>Encrypted 2be98afc827c68087ae15a1688cc2fd8b</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -145,7 +145,7 @@
     <database>HechosMilenio</database>
     <port>3306</port>
     <username>root</username>
-    <password>Encrypted 2be98afc86aa7f2bdaa14a77cd9c4fd8a</password>
+    <password>Encrypted 2be98afc827c68087ae15a1688cc2fd8b</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -208,7 +208,7 @@
     <database>HechosMilenio</database>
     <port>3306</port>
     <username>root</username>
-    <password>Encrypted 2be98afc86aa7f2bdaa14a77cd9c4fd8a</password>
+    <password>Encrypted 2be98afc827c68087ae15a1688cc2fd8b</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -586,7 +586,7 @@ Delete from Dim_Tiempo;</sql>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>C:/Users/Usuario/Downloads/PentahoMilenio/TransformationCliente.ktr</filename>
+      <filename>C:/Users/mr540/Music/PentahoMilenio/PentahoMilenio/TransformationCliente.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -625,7 +625,7 @@ Delete from Dim_Tiempo;</sql>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>C:/Users/Usuario/Downloads/PentahoMilenio/TransformationEmpleado.ktr</filename>
+      <filename>C:/Users/mr540/Music/PentahoMilenio/PentahoMilenio/TransformationEmpleado.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -664,7 +664,7 @@ Delete from Dim_Tiempo;</sql>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>C:/Users/Usuario/Downloads/PentahoMilenio/TransformationHabitacion.ktr</filename>
+      <filename>C:/Users/mr540/Music/PentahoMilenio/PentahoMilenio/TransformationHabitacion.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -703,7 +703,7 @@ Delete from Dim_Tiempo;</sql>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>C:/Users/Usuario/Downloads/PentahoMilenio/TransformationReserva.ktr</filename>
+      <filename>C:/Users/mr540/Music/PentahoMilenio/PentahoMilenio/TransformationReserva.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -781,7 +781,7 @@ FROM (
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>C:/Users/Usuario/Downloads/PentahoMilenio/TransformationEchos.ktr</filename>
+      <filename>C:/Users/mr540/Music/PentahoMilenio/PentahoMilenio/TransformationEchos.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
