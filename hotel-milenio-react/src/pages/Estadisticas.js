@@ -9,14 +9,11 @@ function Estadisticas() {
   const [productos, setProductos] = useState([]);
   const [myChart, setMyChart] = useState(null);
   const [reservacionesPorCliente, setReservacionesPorCliente] = useState([]);
-  const [ocupacionPorDia, setOcupacionPorDia] = useState([]);
-  const reservationsChartRef = useRef(null);
-  const ocupacionChartRef = useRef(null);
   const [tasaOcupacionPorTemporada, setTasaOcupacionPorTemporada] = useState([]);
-  const [reservasPorTipoHabitacion, setReservasPorTipoHabitacion] = useState([]);
-  const [ingresosTotalesPorTemporada, setIngresosTotalesPorTemporada] = useState([]);
-
-
+  const reservationsChartRef = useRef(null); // Referencia para el gráfico de reservaciones
+  const ocupacionChartRef = useRef(null); // Referencia para el gráfico de ocupación
+  const [tasaOcupacionPorDiaSemana, setTasaOcupacionPorDiaSemana] = useState([]);
+  const ocupacionPorDiaSemanaChartRef = useRef(null); // R
   useEffect(() => {
     fetch('http://localhost:5000/crud/ReservacionesPorCliente')
       .then((response) => response.json())
@@ -30,6 +27,20 @@ function Estadisticas() {
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener los datos de estadísticas:', error));
   }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/crudDb2/TasaOcupacionPorTemporada')
+      .then((response) => response.json())
+      .then((data) => setTasaOcupacionPorTemporada(data))
+      .catch((error) => console.error('Error al obtener los datos de estadísticas:', error));
+  }, []);
+
+    useEffect(() => {
+      fetch('http://localhost:5000/crudDb2/TasaOcupacionPorDiaSemana')
+        .then((response) => response.json())
+        .then((data) => setTasaOcupacionPorDiaSemana(data))
+        .catch((error) => console.error('Error al obtener los datos de estadísticas por día de la semana:', error));
+    }, []);
 
   useEffect(() => {
     if (productos.length > 0) {
@@ -69,9 +80,9 @@ function Estadisticas() {
   useEffect(() => {
     if (reservacionesPorCliente.length > 0) {
       if (reservationsChartRef.current !== null) {
-        reservationsChartRef.current.destroy(); 
+        reservationsChartRef.current.destroy();
       }
-      createReservationsChart(); 
+      createReservationsChart();
     }
   }, [reservacionesPorCliente]);
 
@@ -120,89 +131,34 @@ function Estadisticas() {
       }
     });
 
-    reservationsChartRef.current = chart; 
+    reservationsChartRef.current = chart;
   };
 
   useEffect(() => {
-    fetch('http://localhost:5000/crudDb2/TasaOcupacionPorDiaSemana')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Datos de ocupación recibidos:', data);
-        setOcupacionPorDia(data);
-      })
-      .catch((error) => console.error('Error al obtener los datos de ocupación por día:', error));
-  }, []);
-
-  useEffect(() => {
-    if (ocupacionPorDia.length > 0) {
+    if (tasaOcupacionPorTemporada.length > 0) {
       if (ocupacionChartRef.current !== null) {
         ocupacionChartRef.current.destroy();
       }
       createOcupacionChart();
     }
-  }, [ocupacionPorDia]);
-
-  useEffect(() => {
-    fetch('http://localhost:5000/crudDb2/TasaOcupacionPorTemporada')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Datos de tasa de ocupación por temporada recibidos:', data);
-        setTasaOcupacionPorTemporada(data);
-      })
-      .catch((error) => console.error('Error al obtener los datos de tasa de ocupación por temporada:', error));
-  }, []);
-
-  useEffect(() => {
-    if (tasaOcupacionPorTemporada.length > 0) {
-      createTasaOcupacionPorTemporadaChart();
-    }
   }, [tasaOcupacionPorTemporada]);
-  
-
-  useEffect(() => {
-    fetch('http://localhost:5000/crudDb2/NumeroReservasPorTipoHabitacion')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Datos de reservas por tipo de habitación recibidos:', data);
-        setReservasPorTipoHabitacion(data);
-      })
-      .catch((error) => console.error('Error al obtener los datos de reservas por tipo de habitación:', error));
-  }, []);
-  
-  useEffect(() => {
-    if (reservasPorTipoHabitacion.length > 0) {
-      createReservasPorTipoHabitacionChart();
-    }
-  }, [reservasPorTipoHabitacion]);
-  
-
-
-  useEffect(() => {
-    fetch('http://localhost:5000/crudDb2/IngresosTotalesPorTemporada')
-      .then(response => response.json())
-      .then(data => {
-        setIngresosTotalesPorTemporada(data);
-      })
-      .catch(error => console.error('Error al obtener los datos de ingresos totales por temporada:', error));
-  }, []);
-  
-
 
   const createOcupacionChart = () => {
     const ctx = document.getElementById('ocupacionChart');
-    const labels = ocupacionPorDia.map((dia) => dia.DiaSemana);
-    const data = ocupacionPorDia.map((dia) => dia.TasaOcupacionPorDiaSemana);
+    const labels = tasaOcupacionPorTemporada.map((item) => item.Temporada);
+    const data = tasaOcupacionPorTemporada.map((item) => item.TasaOcupacionPorTemporada);
 
     const chart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: labels,
         datasets: [{
-          label: 'Tasa de Ocupación por Día de la Semana (%)',
+          label: 'Tasa de Ocupación por Temporada (%)',
           data: data,
           backgroundColor: 'rgba(75, 192, 192, 0.5)',
           borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
+          borderWidth: 1,
+          fill: false
         }]
       },
       options: {
@@ -211,7 +167,62 @@ function Estadisticas() {
           y: {
             beginAtZero: true,
             ticks: {
-              callback: (value) => `${value}%`
+              callback: function (value) {
+                return value + '%';
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Tasa de Ocupación por Temporada'
+          }
+        }
+      }
+    });
+
+    ocupacionChartRef.current = chart;
+  };
+
+  useEffect(() => {
+    if (tasaOcupacionPorDiaSemana.length > 0) {
+      if (ocupacionPorDiaSemanaChartRef.current !== null) {
+        ocupacionPorDiaSemanaChartRef.current.destroy();
+      }
+      createOcupacionPorDiaSemanaChart();
+    }
+  }, [tasaOcupacionPorDiaSemana]);
+
+  const createOcupacionPorDiaSemanaChart = () => {
+    const ctx = document.getElementById('ocupacionPorDiaSemanaChart');
+    const labels = tasaOcupacionPorDiaSemana.map((item) => item.DiaSemana);
+    const data = tasaOcupacionPorDiaSemana.map((item) => item.TasaOcupacionPorDiaSemana);
+
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Tasa de Ocupación por Día de la Semana (%)',
+          data: data,
+          backgroundColor: 'rgba(255, 159, 64, 0.5)',
+          borderColor: 'rgba(255, 159, 64, 1)',
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function (value) {
+                return value + '%';
+              }
             }
           }
         },
@@ -227,8 +238,9 @@ function Estadisticas() {
       }
     });
 
-    ocupacionChartRef.current = chart;
+    ocupacionPorDiaSemanaChartRef.current = chart;
   };
+
 
   const generarReporteAlmacen = () => {
     fetch('http://localhost:5000/crud/RegistroEstadistica')
@@ -306,127 +318,18 @@ function Estadisticas() {
     }
   };
 
-  const createTasaOcupacionPorTemporadaChart = () => {
-    const ctx = document.getElementById('tasaOcupacionPorTemporadaChart');
-    const labels = tasaOcupacionPorTemporada.map((item) => item.Temporada);
-    const data = tasaOcupacionPorTemporada.map((item) => item.TasaOcupacionPorTemporada);
-  
-    const chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Tasa de Ocupación por Temporada (%)',
-          data: data,
-          backgroundColor: 'rgba(75, 192, 192, 0.5)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: (value) => `${value}%`
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Tasa de Ocupación por Temporada'
-          }
-        }
-      }
-    });
-  };
-  
-  const createReservasPorTipoHabitacionChart = () => {
-    const ctx = document.getElementById('reservasPorTipoHabitacionChart');
-    const labels = reservasPorTipoHabitacion.map((item) => item.Tipo_Habitacion);
-    const data = reservasPorTipoHabitacion.map((item) => item.NumeroReservas);
-  
-    const chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Número de Reservas',
-          data: data,
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        },
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Número de Reservas por Tipo de Habitación'
-          }
-        }
-      }
-    });
-  };
-  
-  useEffect(() => {
-    if (ingresosTotalesPorTemporada.length > 0) {
-      const ctx = document.getElementById('ingresosTotalesPorTemporadaChart');
-      const labels = ingresosTotalesPorTemporada.map((item) => item.Temporada);
-      const data = ingresosTotalesPorTemporada.map((item) => item.IngresosTotales);
-  
-      const ingresosChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Ingresos Totales',
-            data: data,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: true,
-              text: 'Ingresos Totales por Temporada'
-            }
-          }
-        }
-      });
-  
-      return () => {
-        ingresosChart.destroy();
-      };
+  const generarReporteOcupacionImg = async () => {
+    try {
+      const canvas = await html2canvas(document.getElementById('ocupacionChart'));
+      const pdf = new jsPDF();
+      const imgData = canvas.toDataURL('image/png');
+      pdf.text("Reporte de Tasa de Ocupación por Temporada", 20, 10);
+      pdf.addImage(imgData, 'PNG', 10, 20, 100, 100);
+      pdf.save("reporte_ocupacion_con_grafico.pdf");
+    } catch (error) {
+      console.error('Error al generar el reporte con imagen:', error);
     }
-  }, [ingresosTotalesPorTemporada]);
-  
-
+  };
 
   return (
     <div>
@@ -449,12 +352,12 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
-
+  
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Reservaciones cliente</Card.Title>
-                <canvas id="myReservations" height="300"></canvas>
+                <canvas id="myReservations" height="120"></canvas>
               </Card.Body>
               <Card.Body>
                 <Button onClick={generarReporteClientes}>
@@ -466,45 +369,30 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
-
+  
+          <Col sm="6" md="6" lg="4">
+            <Card>
+              <Card.Body>
+                <Card.Title>Tasa de Ocupación por Temporada</Card.Title>
+                <canvas id="ocupacionChart" height="120"></canvas>
+              </Card.Body>
+              <Card.Body>
+                <Button onClick={generarReporteOcupacionImg}>
+                  Generar reporte con imagen
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+  
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Tasa de Ocupación por Día de la Semana</Card.Title>
-                <canvas id="ocupacionChart" height="300"></canvas>
+                <canvas id="ocupacionPorDiaSemanaChart" height="120"></canvas>
               </Card.Body>
             </Card>
           </Col>
-
-          <Col sm="6" md="6" lg="4">
-          <Card>
-            <Card.Body>
-              <Card.Title>Tasa de Ocupación por Temporada</Card.Title>
-              <canvas id="tasaOcupacionPorTemporadaChart" height="300"></canvas>
-            </Card.Body>
-          </Card>
-        </Col>
-
-              <Col sm="6" md="6" lg="4">
-        <Card>
-          <Card.Body>
-            <Card.Title>Número de Reservas por Tipo de Habitación</Card.Title>
-            <canvas id="reservasPorTipoHabitacionChart" height="300"></canvas>
-          </Card.Body>
-        </Card>
-      </Col>
-
-
-            <Col sm="6" md="6" lg="4">
-        <Card>
-          <Card.Body>
-            <Card.Title>Ingresos Totales por Temporada</Card.Title>
-            <canvas id="ingresosTotalesPorTemporadaChart" height="300"></canvas>
-          </Card.Body>
-        </Card>
-      </Col>
-
-
+  
           <Col sm="12" md="12" lg="12">
             <Card>
               <Card.Body>
