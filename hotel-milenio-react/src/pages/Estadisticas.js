@@ -304,7 +304,7 @@ function Estadisticas() {
     if (ingresosPorAnio.length > 0) {
       const ctx = document.getElementById('ingresosAnioChart');
 
-      // Destruir el gráfico anterior si existe
+      
       if (ingresosAnioChartRef.current !== null) {
         ingresosAnioChartRef.current.destroy();
       }
@@ -470,7 +470,7 @@ function Estadisticas() {
             <Card>
               <Card.Body>
                 <Card.Title>Tasa de Ocupación por Temporada</Card.Title>
-                <canvas id="ocupacionChart" height="120"></canvas>
+                <canvas id="ocupacionChart" height="300"></canvas>
               </Card.Body>
               <Card.Body>
                 <Button onClick={generarReporteOcupacionImg}>
