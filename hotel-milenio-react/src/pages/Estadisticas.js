@@ -10,10 +10,15 @@ function Estadisticas() {
   const [myChart, setMyChart] = useState(null);
   const [reservacionesPorCliente, setReservacionesPorCliente] = useState([]);
   const [tasaOcupacionPorTemporada, setTasaOcupacionPorTemporada] = useState([]);
-  const reservationsChartRef = useRef(null); // Referencia para el gráfico de reservaciones
-  const ocupacionChartRef = useRef(null); // Referencia para el gráfico de ocupación
+  const reservationsChartRef = useRef(null);
+  const ocupacionChartRef = useRef(null); 
   const [tasaOcupacionPorDiaSemana, setTasaOcupacionPorDiaSemana] = useState([]);
-  const ocupacionPorDiaSemanaChartRef = useRef(null); // R
+  const ocupacionPorDiaSemanaChartRef = useRef(null); 
+  const [ingresosPorTemporada, setIngresosPorTemporada] = useState([]);
+  const ingresosChartRef = useRef(null); 
+
+
+
   useEffect(() => {
     fetch('http://localhost:5000/crud/ReservacionesPorCliente')
       .then((response) => response.json())
@@ -41,6 +46,15 @@ function Estadisticas() {
         .then((data) => setTasaOcupacionPorDiaSemana(data))
         .catch((error) => console.error('Error al obtener los datos de estadísticas por día de la semana:', error));
     }, []);
+
+
+    useEffect(() => {
+      fetch('http://localhost:5000/crudDb2/IngresosTotalesPorTemporada')
+        .then((response) => response.json())
+        .then((data) => setIngresosPorTemporada(data))
+        .catch((error) => console.error('Error al obtener los datos de ingresos por temporada:', error));
+    }, []);
+
 
   useEffect(() => {
     if (productos.length > 0) {
@@ -241,6 +255,42 @@ function Estadisticas() {
     ocupacionPorDiaSemanaChartRef.current = chart;
   };
 
+  useEffect(() => {
+    if (ingresosPorTemporada.length > 0) {
+      const ctx = document.getElementById('ingresosChart');
+
+      if (ingresosChartRef.current !== null) {
+        ingresosChartRef.current.destroy();
+      }
+
+      const temporadas = ingresosPorTemporada.map((item) => item.Temporada);
+      const ingresos = ingresosPorTemporada.map((item) => item.IngresosTotales);
+
+      const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: temporadas,
+          datasets: [{
+            label: 'Ingresos Totales',
+            data: ingresos,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      ingresosChartRef.current = chart;
+    }
+  }, [ingresosPorTemporada]);
+
 
   const generarReporteAlmacen = () => {
     fetch('http://localhost:5000/crud/RegistroEstadistica')
@@ -389,6 +439,15 @@ function Estadisticas() {
               <Card.Body>
                 <Card.Title>Tasa de Ocupación por Día de la Semana</Card.Title>
                 <canvas id="ocupacionPorDiaSemanaChart" height="120"></canvas>
+              </Card.Body>
+            </Card>
+          </Col>
+  
+          <Col sm="6" md="6" lg="4">
+            <Card>
+              <Card.Body>
+                <Card.Title>Ingresos Totales por Temporada</Card.Title>
+                <canvas id="ingresosChart" height="120"></canvas>
               </Card.Body>
             </Card>
           </Col>
