@@ -15,7 +15,9 @@ function Estadisticas() {
   const [tasaOcupacionPorDiaSemana, setTasaOcupacionPorDiaSemana] = useState([]);
   const ocupacionPorDiaSemanaChartRef = useRef(null); 
   const [ingresosPorTemporada, setIngresosPorTemporada] = useState([]);
-  const ingresosChartRef = useRef(null); 
+  const ingresosCharTemptRef = useRef(null);
+  const [ingresosPorAnio, setIngresosPorAnio] = useState([]);
+  const ingresosAnioChartRef = useRef(null);
 
 
 
@@ -55,6 +57,12 @@ function Estadisticas() {
         .catch((error) => console.error('Error al obtener los datos de ingresos por temporada:', error));
     }, []);
 
+    useEffect(() => {
+      fetch('http://localhost:5000/crudDb2/IngresosTotalesPorAnio')
+        .then((response) => response.json())
+        .then((data) => setIngresosPorAnio(data))
+        .catch((error) => console.error('Error al obtener los datos de ingresos por año:', error));
+    }, []);
 
   useEffect(() => {
     if (productos.length > 0) {
@@ -259,8 +267,8 @@ function Estadisticas() {
     if (ingresosPorTemporada.length > 0) {
       const ctx = document.getElementById('ingresosChart');
 
-      if (ingresosChartRef.current !== null) {
-        ingresosChartRef.current.destroy();
+      if (ingresosCharTemptRef.current !== null) {
+        ingresosCharTemptRef.current.destroy();
       }
 
       const temporadas = ingresosPorTemporada.map((item) => item.Temporada);
@@ -287,9 +295,47 @@ function Estadisticas() {
         }
       });
 
-      ingresosChartRef.current = chart;
+      ingresosCharTemptRef.current = chart;
     }
   }, [ingresosPorTemporada]);
+
+
+  useEffect(() => {
+    if (ingresosPorAnio.length > 0) {
+      const ctx = document.getElementById('ingresosAnioChart');
+
+      // Destruir el gráfico anterior si existe
+      if (ingresosAnioChartRef.current !== null) {
+        ingresosAnioChartRef.current.destroy();
+      }
+
+      const anios = ingresosPorAnio.map((item) => item.Anio);
+      const ingresos = ingresosPorAnio.map((item) => item.IngresosTotales);
+
+      const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: anios,
+          datasets: [{
+            label: 'Ingresos Totales',
+            data: ingresos,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      ingresosAnioChartRef.current = chart;
+    }
+  }, [ingresosPorAnio]);
 
 
   const generarReporteAlmacen = () => {
@@ -448,6 +494,15 @@ function Estadisticas() {
               <Card.Body>
                 <Card.Title>Ingresos Totales por Temporada</Card.Title>
                 <canvas id="ingresosChart" height="120"></canvas>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col sm="6" md="6" lg="4">
+            <Card>
+              <Card.Body>
+                <Card.Title>Ingresos Totales por Año</Card.Title>
+                <canvas id="ingresosAnioChart" height="120"></canvas>
               </Card.Body>
             </Card>
           </Col>
