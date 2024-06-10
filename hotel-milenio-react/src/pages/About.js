@@ -20,15 +20,15 @@ function About() {
         </p>
         <div className="media">
           <div className="profile">
-          <img src={`${process.env.PUBLIC_URL}/images/logo192.png`} alt="José Yamil García Romero" className="profile-pic" />
+          <img src={`${process.env.PUBLIC_URL}/images/Yuru.jpg`} alt="José Yamil García Romero" className="profile-pic" />
             <p>José Yamil García Romero</p>
           </div>
           <div className="profile">
-            <img src={`${process.env.PUBLIC_URL}/images/logo192.png`} alt="Marcelo Enrique Martinez Rocha" className="profile-pic" />
+            <img src={`${process.env.PUBLIC_URL}/images/Gekko.jpg`} alt="Marcelo Enrique Martinez Rocha" className="profile-pic" />
             <p>Marcelo Enrique Martinez Rocha</p>
           </div>
           <div className="profile">
-            <img src={`${process.env.PUBLIC_URL}/images/logo192.png`} alt="Daniela Alejandra Baltodano Lumbi" className="profile-pic" />
+            <img src={`${process.env.PUBLIC_URL}/images/HD-wallpaper-purple-hair-eyes-reyna-valorant.jpg`} alt="Daniela Alejandra Baltodano Lumbi" className="profile-pic" />
             <p>Daniela Alejandra Baltodano Lumbi</p>
           </div>
         </div>

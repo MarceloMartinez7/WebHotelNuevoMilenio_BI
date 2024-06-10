@@ -30,23 +30,6 @@ module.exports = (db) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Ruta para leer registros
     router.get('/EstadoCombo', (reg, res) => {
         // Utiliza la instancia de la base de datos pasada como parámetro
