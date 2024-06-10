@@ -17,7 +17,7 @@ describe('Player', function() {
     // demonstrates use of custom matcher
     expect(player).toBePlaying(song);
   });
-
+// me desmayo
   describe('when song has been paused', function() {
     beforeEach(function() {
       player.play(song);
