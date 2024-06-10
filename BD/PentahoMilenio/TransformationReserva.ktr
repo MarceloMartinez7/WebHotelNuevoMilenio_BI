@@ -444,7 +444,7 @@
     <database>DB_HotelMilenio</database>
     <port>3306</port>
     <username>root</username>
-    <password>Encrypted 2be98afc86aa7f2bdaa14a77cd9c4fd8a</password>
+    <password>Encrypted 2be98afc827c68087ae15a1688cc2fd8b</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -599,7 +599,7 @@ FROM
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -622,7 +622,7 @@ FROM
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -645,7 +645,7 @@ FROM
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -668,7 +668,7 @@ FROM
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -691,7 +691,7 @@ FROM
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -714,7 +714,7 @@ FROM
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -737,7 +737,7 @@ FROM
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>

@@ -443,7 +443,7 @@
     <database>DB_HotelMilenio</database>
     <port>3306</port>
     <username>root</username>
-    <password>Encrypted 2be98afc86aa7f2bdaa14a77cd9c4fd8a</password>
+    <password>Encrypted 2be98afc827c68087ae15a1688cc2fd8b</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -576,12 +576,14 @@
         YEAR(dre.F_salida), 
         LPAD(MONTH(dre.F_salida), 2, '0'), 
         LPAD(DAY(dre.F_salida), 2, '0')
-    ) AS F_salida
+    ) AS F_salida,
+    (DATEDIFF(dre.F_salida, dre.F_entrada) + 1) * h.Precio AS Precio 
 FROM
     DetalleReservacion hdr
 INNER JOIN
-    ReservacionEstancia dre ON hdr.ID_ReservaEstancia = dre.ID_ReservaEstancia;
-</sql>
+    ReservacionEstancia dre ON hdr.ID_ReservaEstancia = dre.ID_ReservaEstancia
+INNER JOIN
+    Habitacion h ON hdr.ID_Habitacion = h.ID_Habitacion;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -608,7 +610,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -631,7 +633,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -654,7 +656,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -677,7 +679,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -700,7 +702,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -723,7 +725,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -746,7 +748,30 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_MX</date_format_locale>
+        <date_format_locale>es_NI</date_format_locale>
+        <date_format_timezone>America/Managua</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>Precio</name>
+        <length>15</length>
+        <precision>0</precision>
+        <origin>TableHechosDetalleReser</origin>
+        <comments>Precio</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>es_NI</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>

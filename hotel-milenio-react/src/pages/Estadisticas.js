@@ -9,7 +9,17 @@ function Estadisticas() {
   const [productos, setProductos] = useState([]);
   const [myChart, setMyChart] = useState(null);
   const [reservacionesPorCliente, setReservacionesPorCliente] = useState([]);
-  const reservationsChartRef = useRef(null); // Referencia para el gráfico de reservaciones
+  const [tasaOcupacionPorTemporada, setTasaOcupacionPorTemporada] = useState([]);
+  const reservationsChartRef = useRef(null);
+  const ocupacionChartRef = useRef(null); 
+  const [tasaOcupacionPorDiaSemana, setTasaOcupacionPorDiaSemana] = useState([]);
+  const ocupacionPorDiaSemanaChartRef = useRef(null); 
+  const [ingresosPorTemporada, setIngresosPorTemporada] = useState([]);
+  const ingresosCharTemptRef = useRef(null);
+  const [ingresosPorAnio, setIngresosPorAnio] = useState([]);
+  const ingresosAnioChartRef = useRef(null);
+
+
 
   useEffect(() => {
     fetch('http://localhost:5000/crud/ReservacionesPorCliente')
@@ -24,6 +34,35 @@ function Estadisticas() {
       .then((data) => setProductos(data))
       .catch((error) => console.error('Error al obtener los datos de estadísticas:', error));
   }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/crudDb2/TasaOcupacionPorTemporada')
+      .then((response) => response.json())
+      .then((data) => setTasaOcupacionPorTemporada(data))
+      .catch((error) => console.error('Error al obtener los datos de estadísticas:', error));
+  }, []);
+
+    useEffect(() => {
+      fetch('http://localhost:5000/crudDb2/TasaOcupacionPorDiaSemana')
+        .then((response) => response.json())
+        .then((data) => setTasaOcupacionPorDiaSemana(data))
+        .catch((error) => console.error('Error al obtener los datos de estadísticas por día de la semana:', error));
+    }, []);
+
+
+    useEffect(() => {
+      fetch('http://localhost:5000/crudDb2/IngresosTotalesPorTemporada')
+        .then((response) => response.json())
+        .then((data) => setIngresosPorTemporada(data))
+        .catch((error) => console.error('Error al obtener los datos de ingresos por temporada:', error));
+    }, []);
+
+    useEffect(() => {
+      fetch('http://localhost:5000/crudDb2/IngresosTotalesPorAnio')
+        .then((response) => response.json())
+        .then((data) => setIngresosPorAnio(data))
+        .catch((error) => console.error('Error al obtener los datos de ingresos por año:', error));
+    }, []);
 
   useEffect(() => {
     if (productos.length > 0) {
@@ -63,9 +102,9 @@ function Estadisticas() {
   useEffect(() => {
     if (reservacionesPorCliente.length > 0) {
       if (reservationsChartRef.current !== null) {
-        reservationsChartRef.current.destroy(); 
+        reservationsChartRef.current.destroy();
       }
-      createReservationsChart(); 
+      createReservationsChart();
     }
   }, [reservacionesPorCliente]);
 
@@ -114,8 +153,190 @@ function Estadisticas() {
       }
     });
 
-    reservationsChartRef.current = chart; 
+    reservationsChartRef.current = chart;
   };
+
+  useEffect(() => {
+    if (tasaOcupacionPorTemporada.length > 0) {
+      if (ocupacionChartRef.current !== null) {
+        ocupacionChartRef.current.destroy();
+      }
+      createOcupacionChart();
+    }
+  }, [tasaOcupacionPorTemporada]);
+
+  const createOcupacionChart = () => {
+    const ctx = document.getElementById('ocupacionChart');
+    const labels = tasaOcupacionPorTemporada.map((item) => item.Temporada);
+    const data = tasaOcupacionPorTemporada.map((item) => item.TasaOcupacionPorTemporada);
+
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Tasa de Ocupación por Temporada (%)',
+          data: data,
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function (value) {
+                return value + '%';
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Tasa de Ocupación por Temporada'
+          }
+        }
+      }
+    });
+
+    ocupacionChartRef.current = chart;
+  };
+
+  useEffect(() => {
+    if (tasaOcupacionPorDiaSemana.length > 0) {
+      if (ocupacionPorDiaSemanaChartRef.current !== null) {
+        ocupacionPorDiaSemanaChartRef.current.destroy();
+      }
+      createOcupacionPorDiaSemanaChart();
+    }
+  }, [tasaOcupacionPorDiaSemana]);
+
+  const createOcupacionPorDiaSemanaChart = () => {
+    const ctx = document.getElementById('ocupacionPorDiaSemanaChart');
+    const labels = tasaOcupacionPorDiaSemana.map((item) => item.DiaSemana);
+    const data = tasaOcupacionPorDiaSemana.map((item) => item.TasaOcupacionPorDiaSemana);
+
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Tasa de Ocupación por Día de la Semana (%)',
+          data: data,
+          backgroundColor: 'rgba(255, 159, 64, 0.5)',
+          borderColor: 'rgba(255, 159, 64, 1)',
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function (value) {
+                return value + '%';
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Tasa de Ocupación por Día de la Semana'
+          }
+        }
+      }
+    });
+
+    ocupacionPorDiaSemanaChartRef.current = chart;
+  };
+
+  useEffect(() => {
+    if (ingresosPorTemporada.length > 0) {
+      const ctx = document.getElementById('ingresosChart');
+
+      if (ingresosCharTemptRef.current !== null) {
+        ingresosCharTemptRef.current.destroy();
+      }
+
+      const temporadas = ingresosPorTemporada.map((item) => item.Temporada);
+      const ingresos = ingresosPorTemporada.map((item) => item.IngresosTotales);
+
+      const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: temporadas,
+          datasets: [{
+            label: 'Ingresos Totales',
+            data: ingresos,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      ingresosCharTemptRef.current = chart;
+    }
+  }, [ingresosPorTemporada]);
+
+
+  useEffect(() => {
+    if (ingresosPorAnio.length > 0) {
+      const ctx = document.getElementById('ingresosAnioChart');
+
+      
+      if (ingresosAnioChartRef.current !== null) {
+        ingresosAnioChartRef.current.destroy();
+      }
+
+      const anios = ingresosPorAnio.map((item) => item.Anio);
+      const ingresos = ingresosPorAnio.map((item) => item.IngresosTotales);
+
+      const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: anios,
+          datasets: [{
+            label: 'Ingresos Totales',
+            data: ingresos,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      ingresosAnioChartRef.current = chart;
+    }
+  }, [ingresosPorAnio]);
+
 
   const generarReporteAlmacen = () => {
     fetch('http://localhost:5000/crud/RegistroEstadistica')
@@ -193,6 +414,19 @@ function Estadisticas() {
     }
   };
 
+  const generarReporteOcupacionImg = async () => {
+    try {
+      const canvas = await html2canvas(document.getElementById('ocupacionChart'));
+      const pdf = new jsPDF();
+      const imgData = canvas.toDataURL('image/png');
+      pdf.text("Reporte de Tasa de Ocupación por Temporada", 20, 10);
+      pdf.addImage(imgData, 'PNG', 10, 20, 100, 100);
+      pdf.save("reporte_ocupacion_con_grafico.pdf");
+    } catch (error) {
+      console.error('Error al generar el reporte con imagen:', error);
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -214,7 +448,7 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
-
+  
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
@@ -231,7 +465,48 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
+  
+          <Col sm="6" md="6" lg="4">
+            <Card>
+              <Card.Body>
+                <Card.Title>Tasa de Ocupación por Temporada</Card.Title>
+                <canvas id="ocupacionChart" height="300"></canvas>
+              </Card.Body>
+              <Card.Body>
+                <Button onClick={generarReporteOcupacionImg}>
+                  Generar reporte con imagen
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+  
+          <Col sm="6" md="6" lg="4">
+            <Card>
+              <Card.Body>
+                <Card.Title>Tasa de Ocupación por Día de la Semana</Card.Title>
+                <canvas id="ocupacionPorDiaSemanaChart" height="120"></canvas>
+              </Card.Body>
+            </Card>
+          </Col>
+  
+          <Col sm="6" md="6" lg="4">
+            <Card>
+              <Card.Body>
+                <Card.Title>Ingresos Totales por Temporada</Card.Title>
+                <canvas id="ingresosChart" height="120"></canvas>
+              </Card.Body>
+            </Card>
+          </Col>
 
+          <Col sm="6" md="6" lg="4">
+            <Card>
+              <Card.Body>
+                <Card.Title>Ingresos Totales por Año</Card.Title>
+                <canvas id="ingresosAnioChart" height="120"></canvas>
+              </Card.Body>
+            </Card>
+          </Col>
+  
           <Col sm="12" md="12" lg="12">
             <Card>
               <Card.Body>
