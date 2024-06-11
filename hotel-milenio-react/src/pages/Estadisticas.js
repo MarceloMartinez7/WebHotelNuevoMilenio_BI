@@ -10,16 +10,14 @@ function Estadisticas() {
   const [myChart, setMyChart] = useState(null);
   const [reservacionesPorCliente, setReservacionesPorCliente] = useState([]);
   const [tasaOcupacionPorTemporada, setTasaOcupacionPorTemporada] = useState([]);
-  const reservationsChartRef = useRef(null);
-  const ocupacionChartRef = useRef(null); 
   const [tasaOcupacionPorDiaSemana, setTasaOcupacionPorDiaSemana] = useState([]);
-  const ocupacionPorDiaSemanaChartRef = useRef(null); 
   const [ingresosPorTemporada, setIngresosPorTemporada] = useState([]);
-  const ingresosCharTemptRef = useRef(null);
   const [ingresosPorAnio, setIngresosPorAnio] = useState([]);
+  const reservationsChartRef = useRef(null);
+  const ocupacionChartRef = useRef(null);
+  const ocupacionPorDiaSemanaChartRef = useRef(null);
+  const ingresosCharTemptRef = useRef(null);
   const ingresosAnioChartRef = useRef(null);
-
-
 
   useEffect(() => {
     fetch('http://localhost:5000/crud/ReservacionesPorCliente')
@@ -42,27 +40,26 @@ function Estadisticas() {
       .catch((error) => console.error('Error al obtener los datos de estadísticas:', error));
   }, []);
 
-    useEffect(() => {
-      fetch('http://localhost:5000/crudDb2/TasaOcupacionPorDiaSemana')
-        .then((response) => response.json())
-        .then((data) => setTasaOcupacionPorDiaSemana(data))
-        .catch((error) => console.error('Error al obtener los datos de estadísticas por día de la semana:', error));
-    }, []);
+  useEffect(() => {
+    fetch('http://localhost:5000/crudDb2/TasaOcupacionPorDiaSemana')
+      .then((response) => response.json())
+      .then((data) => setTasaOcupacionPorDiaSemana(data))
+      .catch((error) => console.error('Error al obtener los datos de estadísticas por día de la semana:', error));
+  }, []);
 
+  useEffect(() => {
+    fetch('http://localhost:5000/crudDb2/IngresosTotalesPorTemporada')
+      .then((response) => response.json())
+      .then((data) => setIngresosPorTemporada(data))
+      .catch((error) => console.error('Error al obtener los datos de ingresos por temporada:', error));
+  }, []);
 
-    useEffect(() => {
-      fetch('http://localhost:5000/crudDb2/IngresosTotalesPorTemporada')
-        .then((response) => response.json())
-        .then((data) => setIngresosPorTemporada(data))
-        .catch((error) => console.error('Error al obtener los datos de ingresos por temporada:', error));
-    }, []);
-
-    useEffect(() => {
-      fetch('http://localhost:5000/crudDb2/IngresosTotalesPorAnio')
-        .then((response) => response.json())
-        .then((data) => setIngresosPorAnio(data))
-        .catch((error) => console.error('Error al obtener los datos de ingresos por año:', error));
-    }, []);
+  useEffect(() => {
+    fetch('http://localhost:5000/crudDb2/IngresosTotalesPorAnio')
+      .then((response) => response.json())
+      .then((data) => setIngresosPorAnio(data))
+      .catch((error) => console.error('Error al obtener los datos de ingresos por año:', error));
+  }, []);
 
   useEffect(() => {
     if (productos.length > 0) {
@@ -299,12 +296,10 @@ function Estadisticas() {
     }
   }, [ingresosPorTemporada]);
 
-
   useEffect(() => {
     if (ingresosPorAnio.length > 0) {
       const ctx = document.getElementById('ingresosAnioChart');
 
-      
       if (ingresosAnioChartRef.current !== null) {
         ingresosAnioChartRef.current.destroy();
       }
@@ -336,7 +331,158 @@ function Estadisticas() {
       ingresosAnioChartRef.current = chart;
     }
   }, [ingresosPorAnio]);
+  const generarReporteIngresosAnio = () => {
+    fetch('http://localhost:5000/crudDb2/IngresosTotalesPorAnio')
+      .then((response) => response.json())
+      .then((ingresosPorAnio) => {
+        const doc = new jsPDF();
+        let y = 15;
+  
+        doc.text("Reporte de Ingresos Totales por Año", 20, 10);
+  
+        ingresosPorAnio.forEach((anio) => {
+          doc.text(`Año: ${anio.Anio}`, 20, y);
+          doc.text(`Ingresos Totales: ${anio.IngresosTotales}`, 20, y + 10);
+  
+          y += 30;
+          if (y >= 280) {
+            doc.addPage();
+            y = 15;
+          }
+        });
+  
+        doc.save("reporte_ingresos_anio.pdf");
+      })
+      .catch((error) => console.error('Error al obtener los ingresos por año:', error));
+  };
+  
+  const generarReporteIngresosAnioImg = async () => {
+    try {
+      const canvas = await html2canvas(document.getElementById('ingresosAnioChart'));
+      const pdf = new jsPDF();
+      const imgData = canvas.toDataURL('image/png');
+      pdf.text("Reporte de Ingresos Totales por Año", 20, 10);
+      pdf.addImage(imgData, 'PNG', 10, 20, 100, 100);
+      pdf.save("reporte_ingresos_anio_con_grafico.pdf");
+    } catch (error) {
+      console.error('Error al generar el reporte con imagen:', error);
+    }
+  };
+  
 
+
+  
+
+
+  const generarReporteIngresosTemporada = () => {
+    fetch('http://localhost:5000/crudDb2/IngresosTotalesPorTemporada')
+      .then((response) => response.json())
+      .then((ingresosPorTemporada) => {
+        const doc = new jsPDF();
+        let y = 15;
+  
+        doc.text("Reporte de Ingresos Totales por Temporada", 20, 10);
+  
+        ingresosPorTemporada.forEach((temporada) => {
+          doc.text(`Temporada: ${temporada.Temporada}`, 20, y);
+          doc.text(`Ingresos Totales: ${temporada.IngresosTotales}`, 20, y + 10);
+  
+          y += 30;
+          if (y >= 280) {
+            doc.addPage();
+            y = 15;
+          }
+        });
+  
+        doc.save("reporte_ingresos_temporada.pdf");
+      })
+      .catch((error) => console.error('Error al obtener los ingresos por temporada:', error));
+  };
+  
+
+  const generarReporteIngresosTemporadaImg = async () => {
+    try {
+      const canvas = await html2canvas(document.getElementById('ingresosChart'));
+      const pdf = new jsPDF();
+      const imgData = canvas.toDataURL('image/png');
+      pdf.text("Reporte de Ingresos Totales por Temporada", 20, 10);
+      pdf.addImage(imgData, 'PNG', 10, 20, 100, 100);
+      pdf.save("reporte_ingresos_temporada_con_grafico.pdf");
+    } catch (error) {
+      console.error('Error al generar el reporte con imagen:', error);
+    }
+  };
+  
+  
+
+  const generarReporteOcupacionTemporada = () => {
+    fetch('http://localhost:5000/crudDb2/TasaOcupacionPorTemporada')
+      .then((response) => response.json())
+      .then((tasaOcupacionPorTemporada) => {
+        const doc = new jsPDF();
+        let y = 15;
+  
+        doc.text("Reporte de Tasa de Ocupación por Temporada", 20, 10);
+  
+        tasaOcupacionPorTemporada.forEach((temporada) => {
+          doc.text(`Temporada: ${temporada.Temporada}`, 20, y);
+          doc.text(`Tasa de Ocupación: ${temporada.TasaOcupacionPorTemporada}`, 20, y + 10);
+  
+          y += 30;
+          if (y >= 280) {
+            doc.addPage();
+            y = 15;
+          }
+        });
+  
+        doc.save("reporte_tasa_ocupacion_temporada.pdf");
+      })
+      .catch((error) => console.error('Error al obtener la tasa de ocupación por temporada:', error));
+  };
+  
+
+
+
+  const generarReporteOcupacionDiaSemana = () => {
+    fetch('http://localhost:5000/crudDb2/TasaOcupacionPorDiaSemana')
+      .then((response) => response.json())
+      .then((tasaOcupacionPorDiaSemana) => {
+        const doc = new jsPDF();
+        let y = 15;
+  
+        doc.text("Reporte de Tasa de Ocupación por Día de la Semana", 20, 10);
+  
+        tasaOcupacionPorDiaSemana.forEach((diaSemana) => {
+          doc.text(`Día de la semana: ${diaSemana.DiaSemana}`, 20, y);
+          doc.text(`Tasa de Ocupación: ${diaSemana.TasaOcupacionPorDiaSemana}`, 20, y + 10);
+  
+          y += 30;
+          if (y >= 280) {
+            doc.addPage();
+            y = 15;
+          }
+        });
+  
+        doc.save("reporte_tasa_ocupacion_dia_semana.pdf");
+      })
+      .catch((error) => console.error('Error al obtener la tasa de ocupación por día de la semana:', error));
+  };
+  
+
+
+  const generarReporteOcupacionDiaSemanaImg = async () => {
+    try {
+      const canvas = await html2canvas(document.getElementById('ocupacionPorDiaSemanaChart'));
+      const pdf = new jsPDF();
+      const imgData = canvas.toDataURL('image/png');
+      pdf.text("Reporte de Tasa de Ocupación por Día de la Semana", 20, 10);
+      pdf.addImage(imgData, 'PNG', 10, 20, 100, 100);
+      pdf.save("reporte_ocupacion_dia_semana_con_grafico.pdf");
+    } catch (error) {
+      console.error('Error al generar el reporte con imagen:', error);
+    }
+  };
+  
 
   const generarReporteAlmacen = () => {
     fetch('http://localhost:5000/crud/RegistroEstadistica')
@@ -378,7 +524,8 @@ function Estadisticas() {
 
           y += 30;
           if (y >= 280) {
-            doc.addPage();
+            doc
+            .addPage();
             y = 15;
           }
         });
@@ -426,7 +573,6 @@ function Estadisticas() {
       console.error('Error al generar el reporte con imagen:', error);
     }
   };
-
   return (
     <div>
       <Header />
@@ -436,13 +582,19 @@ function Estadisticas() {
             <Card>
               <Card.Body>
                 <Card.Title>Estado de Reserva</Card.Title>
-                <canvas id="myChart" height="300"></canvas>
+                <canvas id="myChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body>
-                <Button onClick={generarReporteAlmacen}>
+              <Card.Body className="d-flex justify-content-between">
+                <Button
+                  onClick={generarReporteAlmacen}
+                  className="btn btn-primary"
+                >
                   Generar reporte
                 </Button>
-                <Button onClick={generarReporteAlmacenImg}>
+                <Button
+                  onClick={generarReporteAlmacenImg}
+                  className="btn btn-success"
+                >
                   Generar reporte con imagen
                 </Button>
               </Card.Body>
@@ -453,13 +605,19 @@ function Estadisticas() {
             <Card>
               <Card.Body>
                 <Card.Title>Reservaciones cliente</Card.Title>
-                <canvas id="myReservations" height="120"></canvas>
+                <canvas id="myReservations" height="250"></canvas>
               </Card.Body>
-              <Card.Body>
-                <Button onClick={generarReporteClientes}>
+              <Card.Body className="d-flex justify-content-between">
+                <Button
+                  onClick={generarReporteClientes}
+                  className="btn btn-primary"
+                >
                   Generar reporte
                 </Button>
-                <Button onClick={generarReporteReservacionesImg}>
+                <Button
+                  onClick={generarReporteReservacionesImg}
+                  className="btn btn-success"
+                >
                   Generar reporte con imagen
                 </Button>
               </Card.Body>
@@ -470,10 +628,19 @@ function Estadisticas() {
             <Card>
               <Card.Body>
                 <Card.Title>Tasa de Ocupación por Temporada</Card.Title>
-                <canvas id="ocupacionChart" height="300"></canvas>
+                <canvas id="ocupacionChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body>
-                <Button onClick={generarReporteOcupacionImg}>
+              <Card.Body className="d-flex justify-content-between">
+                <Button
+                  onClick={generarReporteOcupacionTemporada}
+                  className="btn btn-primary"
+                >
+                  Generar reporte
+                </Button>
+                <Button
+                  onClick={generarReporteOcupacionImg}
+                  className="btn btn-success"
+                >
                   Generar reporte con imagen
                 </Button>
               </Card.Body>
@@ -484,7 +651,21 @@ function Estadisticas() {
             <Card>
               <Card.Body>
                 <Card.Title>Tasa de Ocupación por Día de la Semana</Card.Title>
-                <canvas id="ocupacionPorDiaSemanaChart" height="120"></canvas>
+                <canvas id="ocupacionPorDiaSemanaChart" height="250"></canvas>
+              </Card.Body>
+              <Card.Body className="d-flex justify-content-between">
+                <Button
+                  onClick={generarReporteOcupacionDiaSemana}
+                  className="btn btn-primary"
+                >
+                  Generar reporte
+                </Button>
+                <Button
+                  onClick={generarReporteOcupacionDiaSemanaImg}
+                  className="btn btn-success"
+                >
+                  Generar reporte imagen
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -493,33 +674,44 @@ function Estadisticas() {
             <Card>
               <Card.Body>
                 <Card.Title>Ingresos Totales por Temporada</Card.Title>
-                <canvas id="ingresosChart" height="120"></canvas>
+                <canvas id="ingresosChart" height="250"></canvas>
               </Card.Body>
-            </Card>
-          </Col>
-
-          <Col sm="6" md="6" lg="4">
-            <Card>
-              <Card.Body>
-                <Card.Title>Ingresos Totales por Año</Card.Title>
-                <canvas id="ingresosAnioChart" height="120"></canvas>
+              <Card.Body className="d-flex justify-content-between">
+                <Button
+                  onClick={generarReporteIngresosTemporada}
+                  className="btn btn-primary"
+                >
+                  Generar reporte
+                </Button>
+                <Button
+                  onClick={generarReporteIngresosTemporadaImg}
+                  className="btn btn-success"
+                >
+                  Generar reporte imagen
+                </Button>
               </Card.Body>
             </Card>
           </Col>
   
-          <Col sm="12" md="12" lg="12">
+          <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
-                <Card.Title>Estado del almacen</Card.Title>
-                <iframe
-                  title="HotelMilenioKpiPrueba1"
-                  width="100%"
-                  height="600"
-                  src="https://app.powerbi.com/view?r=eyJrIjoiNTRmY2IyYWMtMTQ1OC00NDQ3LTg0YTMtYzJjODM2NjUzMDQxIiwidCI6ImU0NzY0NmZlLWRhMjctNDUxOC04NDM2LTVmOGIxNThiYTEyNyIsImMiOjR9"
-                  frameborder="0"
-                  allowFullScreen="true"
-                  style={{ display: 'block', margin: '0 auto' }}
-                ></iframe>
+                <Card.Title>Ingresos Totales por Año</Card.Title>
+                <canvas id="ingresosAnioChart" height="250"></canvas>
+              </Card.Body>
+              <Card.Body className="d-flex justify-content-between">
+                <Button
+                  onClick={generarReporteIngresosAnio}
+                  className="btn btn-primary"
+                >
+                  Generar reporte
+                </Button>
+                <Button
+                  onClick={generarReporteIngresosAnioImg}
+                  className="btn btn-success"
+                >
+                  Generar reporte imagen
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -527,6 +719,7 @@ function Estadisticas() {
       </Container>
     </div>
   );
+  
 }
-
 export default Estadisticas;
+
