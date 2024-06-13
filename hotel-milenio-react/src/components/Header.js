@@ -90,7 +90,11 @@ function Header() {
               </NavDropdown.Item>
             </NavDropdown>
 
-
+            <NavDropdown title="Dashboard" id="Dashboard">
+              <NavDropdown.Item>
+                <Link to="/Dashboard" className="link-unstyled">Dashboard</Link>
+              </NavDropdown.Item>
+            </NavDropdown>
           
 
             <NavDropdown title="Reportes" id="Reportes">
@@ -98,7 +102,7 @@ function Header() {
                 <Link to="/Reportes" className="link-unstyled">Registrar Reportes</Link>
               </NavDropdown.Item>    
               
-              
+                          
 
             </NavDropdown>
             <Nav.Link>

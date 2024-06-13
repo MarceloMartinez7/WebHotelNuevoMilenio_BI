@@ -51,45 +51,6 @@ module.exports = (db) => {
   });
 
 
-// Ruta para calcular el promedio de estancia por cliente
-  router.get('/PromedioDiasEstanciaPorCliente', (req, res) => {
-    const sql = `
-      SELECT ID_Cliente,
-        AVG(DATEDIFF(F_Salida, F_entrada)) AS PromedioDiasEstancia
-      FROM Dim_ReservaEstancia
-      GROUP BY ID_Cliente;
-    `;
-  
-    db.query(sql, (err, result) => {
-      if (err) {
-        console.error('Error al calcular el promedio de días de estancia por cliente:', err);
-        res.status(500).json({ error: 'Error al calcular el promedio de días de estancia por cliente' });
-      } else {
-        res.status(200).json(result);
-      }
-    });
-  });
-
-// Ruta para obtener el número de reservas por habitación
-router.get('/NumeroReservasPorHabitacion', (req, res) => {
-  const sql = `
-    SELECT ID_Habitacion,
-      COUNT(*) AS NumeroReservas
-    FROM Hecho_DetalleReservaciones
-    GROUP BY ID_Habitacion
-    ORDER BY COUNT(*) DESC;
-  `;
-
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error('Error al calcular el número de reservas por habitación:', err);
-      res.status(500).json({ error: 'Error al calcular el número de reservas por habitación' });
-    } else {
-      res.status(200).json(result);
-    }
-  });
-});
-
 
 // Ruta para obtener los ingresos totales por temporada
 router.get('/IngresosTotalesPorTemporada', (req, res) => {
@@ -113,23 +74,6 @@ router.get('/IngresosTotalesPorTemporada', (req, res) => {
   });
 });
 
- // Obtener todas las habitaciones disponibles
- router.get('/HabitacionesDisponibles', (req, res) => {
-  const sql = `
-    SELECT *
-    FROM Dim_Habitaciones
-    WHERE Estado = 'Disponible';
-  `;
-
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error('Error al obtener las habitaciones disponibles:', err);
-      res.status(500).json({ error: 'Error al obtener las habitaciones disponibles' });
-    } else {
-      res.status(200).json(result);
-    }
-  });
-});
 
 
 // Obtener el total de ingresos por año
@@ -153,7 +97,70 @@ router.get('/IngresosTotalesPorAnio', (req, res) => {
 });
 
 
-// Obtener el número de reservas por mes
+// Ruta para calcular el promedio de estancia por cliente 
+router.get('/PromedioDiasEstanciaPorCliente', (req, res) => {
+  const sql = `
+  SELECT CONCAT(C.Nombres, ' ', C.Apellidos) AS Nombre_Completo,
+       AVG(DATEDIFF(R.F_Salida, R.F_entrada)) AS PromedioDiasEstancia
+FROM Dim_ReservaEstancia R
+JOIN Dim_Cliente C ON R.ID_Cliente = C.ID_Cliente
+GROUP BY Nombre_Completo;
+`;
+
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error('Error al calcular el promedio de días de estancia por cliente:', err);
+      res.status(500).json({ error: 'Error al calcular el promedio de días de estancia por cliente' });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
+
+// Ruta para obtener el número de reservas por habitación 
+router.get('/NumeroReservasPorHabitacion', (req, res) => {
+  const sql = `
+    SELECT ID_Habitacion,
+      COUNT(*) AS NumeroReservas
+    FROM Hecho_DetalleReservaciones
+    GROUP BY ID_Habitacion
+    ORDER BY COUNT(*) DESC;
+  `;
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error('Error al calcular el número de reservas por habitación:', err);
+      res.status(500).json({ error: 'Error al calcular el número de reservas por habitación' });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
+
+ // Obtener todas las habitaciones disponibles 
+ router.get('/HabitacionesDisponibles', (req, res) => {
+  const sql = `
+   SELECT N_de_habitacion, Precio, Estado
+    FROM Dim_Habitaciones
+    WHERE Estado = 'Disponible';
+  `;
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error('Error al obtener las habitaciones disponibles:', err);
+      res.status(500).json({ error: 'Error al obtener las habitaciones disponibles' });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
+
+
+// Obtener el número de reservas por mes 
 router.get('/NumeroReservasPorMes', (req, res) => {
   const sql = `
     SELECT Mes,
@@ -175,7 +182,7 @@ router.get('/NumeroReservasPorMes', (req, res) => {
 
 
 
-  // Obtener el número de reservas por tipo de habitación
+  // Obtener el número de reservas por tipo de habitación 
   router.get('/NumeroReservasPorTipoHabitacion', (req, res) => {
     const sql = `
       SELECT Tipo_Habitacion,
@@ -197,7 +204,7 @@ router.get('/NumeroReservasPorMes', (req, res) => {
 
 
 
-  // Obtener la tasa de ocupación mensual
+  // Obtener la tasa de ocupación mensual 
   router.get('/TasaOcupacionMensual', (req, res) => {
     const sql = `
       SELECT Mes,
