@@ -30,7 +30,7 @@ db.connect((err) => {
 const db2 = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Marcelox2021',
+  password: 'Mysql2023',
   database: 'hechosmilenio',
 });
 
