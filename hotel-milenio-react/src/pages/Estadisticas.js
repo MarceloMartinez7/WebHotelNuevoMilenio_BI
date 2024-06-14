@@ -830,7 +830,7 @@ function Estadisticas() {
         doc.text("Reporte de Habitaciones Disponibles", 20, 10);
 
         habitacionesDisponibles.forEach(habitacion => {
-          doc.text(`Número de Habitación: ${habitacion.N_Habitacion}`, 20, y);
+          doc.text(`Número de Habitación: ${habitacion.N_de_habitacion}`, 20, y);
           doc.text(`Precio: ${habitacion.Precio}`, 20, y + 10);
           doc.text(`Estado: ${habitacion.Estado}`, 20, y + 20);
 

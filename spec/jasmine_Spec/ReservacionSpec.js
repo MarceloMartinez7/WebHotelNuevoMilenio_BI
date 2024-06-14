@@ -1,32 +1,47 @@
-// reservationSystemSpec.js
-const ReservationSystem = require('../../lib/jasmine_examples/ReservacionP');
+const ReservationHelper = require('../../spec/helpers/jasmine_Helpers/ReservacionHelpers');
 
-describe('ReservationSystem', function() {
-    let reservationSystem;
+describe('ReservationHelper', function() {
+    let reservationHelper;
 
     beforeEach(function() {
-        reservationSystem = new ReservationSystem();
+        reservationHelper = new ReservationHelper();
     });
 
-    it('should register a reservation successfully when date and time are available', function() {
-        let result = reservationSystem.registerReservation('Alice', '2024-06-01', '18:00');
-        expect(result).toBe(true);
-        expect(reservationSystem.reservations.length).toBe(1);
-        expect(reservationSystem.reservations[0].name).toBe('Alice');
-        expect(reservationSystem.reservations[0].date).toBe('2024-06-01');
-        expect(reservationSystem.reservations[0].time).toBe('18:00');
+    it('should register a reservation successfully with valid data', function() {
+        const reservation = reservationHelper.registerReservation('John Doe', new Date('2024-06-01'), new Date('2024-06-10'), 'Suite');
+        expect(reservation.guestName).toBe('John Doe');
+        expect(reservation.checkInDate).toEqual(new Date('2024-06-01'));
+        expect(reservation.checkOutDate).toEqual(new Date('2024-06-10'));
+        expect(reservation.roomType).toBe('Suite');
+        expect(reservation.reservationId).toBeDefined();
     });
 
-    it('should not register a reservation when date and time are not available', function() {
-        reservationSystem.registerReservation('Alice', '2024-06-01', '18:00');
-        let result = reservationSystem.registerReservation('Bob', '2024-06-01', '18:00');
-        expect(result).toBe(false);
-        expect(reservationSystem.reservations.length).toBe(1); // Should still be only one reservation
+    it('should throw an error if check-out date is before check-in date', function() {
+        expect(() => {
+            reservationHelper.registerReservation('John Doe', new Date('2024-06-10'), new Date('2024-06-01'), 'Suite');
+        }).toThrowError("Fecha de check-out debe ser después de la fecha de check-in.");
     });
 
-    it('should correctly check if a date and time are available', function() {
-        expect(reservationSystem.isDateAvailable('2024-06-01', '18:00')).toBe(true);
-        reservationSystem.registerReservation('Alice', '2024-06-01', '18:00');
-        expect(reservationSystem.isDateAvailable('2024-06-01', '18:00')).toBe(false);
+    it('should throw an error if any data is missing', function() {
+        expect(() => {
+            reservationHelper.registerReservation('', new Date('2024-06-01'), new Date('2024-06-10'), 'Suite');
+        }).toThrowError("Datos de la reservación no válidos.");
+    });
+
+    it('should return reservation details by ID', function() {
+        const reservation = reservationHelper.registerReservation('John Doe', new Date('2024-06-01'), new Date('2024-06-10'), 'Suite');
+        const retrievedReservation = reservationHelper.getReservationDetails(reservation.reservationId);
+        expect(retrievedReservation).toEqual(reservation);
+    });
+
+    it('should return null for non-existent reservation ID', function() {
+        const retrievedReservation = reservationHelper.getReservationDetails(999999);
+        expect(retrievedReservation).toBeNull();
+    });
+
+    it('should check date availability correctly', function() {
+        reservationHelper.registerReservation('John Doe', new Date('2024-06-01'), new Date('2024-06-10'), 'Suite');
+        const isAvailable = reservationHelper.isDateAvailable(new Date('2024-06-01'), new Date('2024-06-10'));
+        expect(isAvailable).toBe(false);
     });
 });
