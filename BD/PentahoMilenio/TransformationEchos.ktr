@@ -576,14 +576,17 @@
         YEAR(dre.F_salida), 
         LPAD(MONTH(dre.F_salida), 2, '0'), 
         LPAD(DAY(dre.F_salida), 2, '0')
-    ) AS F_salida,
-    (DATEDIFF(dre.F_salida, dre.F_entrada) + 1) * h.Precio AS Precio 
+    ) AS ID_Fsalida,
+    (DATEDIFF(dre.F_salida, dre.F_entrada) + 1) * h.Precio AS Precio,
+dre.F_entrada,
+dre.F_salida   
 FROM
     DetalleReservacion hdr
 INNER JOIN
     ReservacionEstancia dre ON hdr.ID_ReservaEstancia = dre.ID_ReservaEstancia
 INNER JOIN
-    Habitacion h ON hdr.ID_Habitacion = h.ID_Habitacion;</sql>
+    Habitacion h ON hdr.ID_Habitacion = h.ID_Habitacion; 
+</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
