@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import Chart from 'chart.js/auto';
+import emailjs from 'emailjs-com';
 
 function Estadisticas() {
   const [productos, setProductos] = useState([]);
@@ -30,6 +31,461 @@ function Estadisticas() {
   const reservasPorTipoChartRef = useRef(null);
   const [tasaOcupacionMensual, setTasaOcupacionMensual] = useState([]);
   const tasaOcupacionMensualChartRef = useRef(null);
+
+
+
+
+  const formatearProductos = (productos) => {
+    return productos.map(producto => {
+      return `Nombre: ${producto.DiaSemana} \nTotal de reservaciones: ${producto.TotalReservaciones}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo = () => {
+    // Formateo de datos
+    const ProductosFormateados = formatearProductos(productos);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Estado de reserva',
+      title: 'Estas son las reservas por dia',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: ProductosFormateados,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+  const formatearReservaCliente = (reserClientes) => {
+    return reserClientes.map(reserCliente => {
+      return `Nombre: ${reserCliente.Nombre}${reserCliente.Apellido} \nCantidad de reservaciones: ${reserCliente.CantidadReservaciones}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo2 = () => {
+    // Formateo de datos
+    const reserclienFormateados = formatearReservaCliente(reservacionesPorCliente);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: reserclienFormateados,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_p64c0bl', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+
+
+
+  
+
+  const formatearTasaocupaciontemporada = (tasoctemporadas) => {
+    return tasoctemporadas.map(tasoctemporada => {
+      return `Nombre temporada: ${tasoctemporada.Temporada}\nTasa de ocupacion: ${tasoctemporada.TasaOcupacionPorTemporada}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo3 = () => {
+    // Formateo de datos
+    const TasaTempoFormateados = formatearTasaocupaciontemporada(tasaOcupacionPorTemporada);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Tasa de ocupacion',
+      title: 'Estas son las tasas de Ocupaciones por Temporada',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: TasaTempoFormateados,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+
+
+
+
+
+  const formatearTasaocupacionDiasemana = (tasocDiSemanas) => {
+    return tasocDiSemanas.map(tasocDiSemana => {
+      return `Dia: ${tasocDiSemana.DiaSemana}\nTasa de ocupacion: ${tasocDiSemana.TasaOcupacionPorDiaSemana}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo4 = () => {
+    // Formateo de datos
+    const TasaDiaFormateados = formatearTasaocupacionDiasemana(tasaOcupacionPorDiaSemana);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Tasa de ocupacion',
+      title: 'Estas son las tasas de Ocupaciones por Dia',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: TasaDiaFormateados,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+  
+  
+
+  const formatearIngresoTemporada = (ingresotemporadas) => {
+    return ingresotemporadas.map(ingresotemporada => {
+      return `Temporada: ${ingresotemporada.Temporada}\nIngreso Total: ${ingresotemporada.IngresosTotales}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo5 = () => {
+    // Formateo de datos
+    const IngresosFormateados = formatearIngresoTemporada(ingresosPorTemporada);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Ingresos Temporada',
+      title: 'Estas son los registro de ingresos por temporada',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: IngresosFormateados,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+
+  const formatearIngresoanio = (ingresoanios) => {
+    return ingresoanios.map(ingresoanio => {
+      return `Año: ${ingresoanio.Anio}\nIngreso Total: ${ingresoanio.IngresosTotales}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo6 = () => {
+    // Formateo de datos
+    const IngresosanioFormateados = formatearIngresoanio(ingresosPorAnio);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Ingresos Año',
+      title: 'Estas son los registro de ingresos por año',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: IngresosanioFormateados,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+
+
+
+
+  
+
+  const formatearPromEstaCliente = (PromEstaclientes) => {
+    return PromEstaclientes.map(PromEstacliente => {
+      return `Nombre: ${PromEstacliente.Nombre_Completo}\nPromedio de estancia: ${PromEstacliente.PromedioDiasEstancia}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo7 = () => {
+    // Formateo de datos
+    const PromeEstanciaClienteFormateado = formatearPromEstaCliente(promedioDiasEstanciaPorCliente);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Promedio Estancia de clientes',
+      title: 'Estas son los promedio de estancia de los cliente',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: PromeEstanciaClienteFormateado,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+  
+
+  const formatearReservaHabitacion = (ReservaHabitacions) => {
+    return ReservaHabitacions.map(ReservaHabitacion => {
+      return `Numero de habitacion: ${ReservaHabitacion.ID_Habitacion}\nPromedio de estancia: ${ReservaHabitacion.NumeroReservas}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo8 = () => {
+    // Formateo de datos
+    const ReservaHabitFormateado = formatearReservaHabitacion(numeroReservasPorHabitacion);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Reserva por habitacion',
+      title: 'Estas son las reserva por habitacion',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: ReservaHabitFormateado,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+
+
+
+
+
+  const formatearPrecHabitacionesDispo = (HabitaDisponibles) => {
+    return HabitaDisponibles.map(HabitaDisponible => {
+      return `Numero de habitacion: ${HabitaDisponible.N_de_habitacion}\nPrecio: ${HabitaDisponible.Precio}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo9 = () => {
+    // Formateo de datos
+    const HabitaDispoFormateado = formatearPrecHabitacionesDispo(habitacionesDisponibles);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Precio Habitacion disponible',
+      title: 'Estas son los precio de las habitaciones disponible',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: HabitaDispoFormateado,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+
+
+
+
+
+
+  const formatearNumReservames = (Reservames) => {
+    return Reservames.map(Reservame => {
+      return `Mes: ${Reservame.Mes}\nNumero de reserva: ${Reservame.NumeroReservas}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo10 = () => {
+    // Formateo de datos
+    const Numreservameformateado = formatearNumReservames(reservasPorMes);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Reserva por mes',
+      title: 'Estos son los numero de reserva por mes',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: Numreservameformateado,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+
+
+
+
+  const formatearNumReservTipohabitacion = (ReservTipohabis) => {
+    return ReservTipohabis.map(ReservTipohabi => {
+      return `Tipo de habitacion: ${ReservTipohabi.Tipo_Habitacion}\nNumero de reserva: ${ReservTipohabi.NumeroReservas}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo11 = () => {
+    // Formateo de datos
+    const NumreservameTipohabiformateado = formatearNumReservTipohabitacion(reservasPorTipo);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Reserva por Tipo',
+      title: 'Estos son los numero de reserva por Tipo de habitacion',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: NumreservameTipohabiformateado,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+
+
+
+
+
+
+
+  const formatearTasaOcupMensual = (TasaMensuals) => {
+    return TasaMensuals.map(TasaMensual => {
+      return `Mes: ${TasaMensual.Mes}\nTasa de ocupacion Mensual: ${TasaMensual.TasaOcupacionMensual}`;
+    }).join('\n\n');
+  };
+
+
+  const enviarCorreo12 = () => {
+    // Formateo de datos
+    const TasaMensualOcupFormateado = formatearTasaOcupMensual(tasaOcupacionMensual);
+
+    // Datos de ejemplo (reemplaza con tus datos reales)
+    const data = {
+      subject: 'Tasa de ocupacion mensual',
+      title: 'Estos son las tasa de ocupacion mensual',
+      to_name: 'Yamil',
+      user_email: 'yg97507@gmail.com',
+      message: TasaMensualOcupFormateado,
+    };
+
+    // Envía el correo utilizando EmailJS
+    emailjs.send('service_4eaqwgf', 'template_7u1g0ws', data, 'voWjHjK7IiuJZpcKp')
+      .then((response) => {
+        alert('Correo enviado.');
+        console.log('Correo enviado.', response);
+      })
+      .catch((error) => {
+        alert('Error al enviar el correo.');
+        console.error('Error al enviar el correo:', error);
+      });
+  };
+
+
+
+
 
   useEffect(() => {
     fetch('http://localhost:5000/crudDb2/TasaOcupacionMensual')
@@ -1204,6 +1660,10 @@ function Estadisticas() {
                 >
                   Generar reporte con imagen
                 </Button>
+
+                <Button variant="secondary" onClick={enviarCorreo} className="mt-2">
+                  Enviar por Correo
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -1226,6 +1686,9 @@ function Estadisticas() {
                   className="btn btn-success"
                 >
                   Generar reporte con imagen
+                </Button>
+                <Button variant="secondary" onClick={enviarCorreo2} className="mt-2">
+                  Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
@@ -1250,6 +1713,10 @@ function Estadisticas() {
                 >
                   Generar reporte con imagen
                 </Button>
+
+                <Button variant="secondary" onClick={enviarCorreo3} className="mt-2">
+                  Enviar por Correo
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -1272,6 +1739,9 @@ function Estadisticas() {
                   className="btn btn-success"
                 >
                   Generar reporte imagen
+                </Button>
+                <Button variant="secondary" onClick={enviarCorreo4} className="mt-2">
+                  Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
@@ -1296,6 +1766,10 @@ function Estadisticas() {
                 >
                   Generar reporte imagen
                 </Button>
+
+                <Button variant="secondary" onClick={enviarCorreo5} className="mt-2">
+                  Enviar por Correo
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -1319,6 +1793,10 @@ function Estadisticas() {
                 >
                   Generar reporte imagen
                 </Button>
+
+                <Button variant="secondary" onClick={enviarCorreo6} className="mt-2">
+                  Enviar por Correo
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -1335,6 +1813,10 @@ function Estadisticas() {
                 </Button>
                 <Button onClick={generarReportePromedioDiasEstanciaImg} className="btn btn-primary">
                   Generar reporte con gráfico
+                </Button>
+
+                <Button variant="secondary" onClick={enviarCorreo7} className="mt-2">
+                  Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
@@ -1353,6 +1835,10 @@ function Estadisticas() {
                 <Button onClick={generarReporteNumeroReservasImg} className="btn btn-success">
                   Generar reporte con imagen
                 </Button>
+
+                <Button variant="secondary" onClick={enviarCorreo8} className="mt-2">
+                  Enviar por Correo
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -1370,6 +1856,10 @@ function Estadisticas() {
                 </Button>
                 <Button onClick={generarReporteHabitacionesImg} className="btn btn-success">
                   Generar reporte con imagen
+                </Button>
+
+                <Button variant="secondary" onClick={enviarCorreo9} className="mt-2">
+                  Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
@@ -1390,6 +1880,9 @@ function Estadisticas() {
                 <Button onClick={generarReporteReservasPorMesImg} className="btn btn-success">
                   Generar reporte con imagen
                 </Button>
+                <Button variant="secondary" onClick={enviarCorreo10} className="mt-2">
+                  Enviar por Correo
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -1408,10 +1901,13 @@ function Estadisticas() {
                 <Button onClick={generarReporteReservasPorTipoImg} className="btn btn-success">
                   Generar reporte con imagen
                 </Button>
+                <Button variant="secondary" onClick={enviarCorreo11} className="mt-2">
+                  Enviar por Correo
+                </Button>
               </Card.Body>
             </Card>
           </Col>
-          
+
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
@@ -1424,6 +1920,9 @@ function Estadisticas() {
                 </Button>
                 <Button onClick={generarReporteTasaOcupacionMensualImg} className="btn btn-success">
                   Generar reporte con imagen
+                </Button>
+                <Button variant="secondary" onClick={enviarCorreo12} className="mt-2">
+                  Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
