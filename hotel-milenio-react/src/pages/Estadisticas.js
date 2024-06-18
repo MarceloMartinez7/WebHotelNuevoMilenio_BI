@@ -1647,44 +1647,30 @@ function Estadisticas() {
                 <Card.Title>Estado de Reserva</Card.Title>
                 <canvas id="myChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button
-                  onClick={generarReporteAlmacen}
-                  className="btn btn-primary"
-                >
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteAlmacen} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button
-                  onClick={generarReporteAlmacenImg}
-                  className="btn btn-success"
-                >
+                <Button onClick={generarReporteAlmacenImg} className="btn btn-success mb-2">
                   Generar reporte con imagen
                 </Button>
-
                 <Button variant="secondary" onClick={enviarCorreo} className="mt-2">
                   Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
           </Col>
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Reservaciones cliente</Card.Title>
                 <canvas id="myReservations" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button
-                  onClick={generarReporteClientes}
-                  className="btn btn-primary"
-                >
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteClientes} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button
-                  onClick={generarReporteReservacionesImg}
-                  className="btn btn-success"
-                >
+                <Button onClick={generarReporteReservacionesImg} className="btn btn-success mb-2">
                   Generar reporte con imagen
                 </Button>
                 <Button variant="secondary" onClick={enviarCorreo2} className="mt-2">
@@ -1693,51 +1679,36 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Tasa de Ocupación por Temporada</Card.Title>
                 <canvas id="ocupacionChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button
-                  onClick={generarReporteOcupacionTemporada}
-                  className="btn btn-primary"
-                >
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteOcupacionTemporada} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button
-                  onClick={generarReporteOcupacionImg}
-                  className="btn btn-success"
-                >
+                <Button onClick={generarReporteOcupacionImg} className="btn btn-success mb-2">
                   Generar reporte con imagen
                 </Button>
-
                 <Button variant="secondary" onClick={enviarCorreo3} className="mt-2">
                   Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
           </Col>
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Tasa de Ocupación por Día de la Semana</Card.Title>
                 <canvas id="ocupacionPorDiaSemanaChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button
-                  onClick={generarReporteOcupacionDiaSemana}
-                  className="btn btn-primary"
-                >
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteOcupacionDiaSemana} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button
-                  onClick={generarReporteOcupacionDiaSemanaImg}
-                  className="btn btn-success"
-                >
+                <Button onClick={generarReporteOcupacionDiaSemanaImg} className="btn btn-success mb-2">
                   Generar reporte imagen
                 </Button>
                 <Button variant="secondary" onClick={enviarCorreo4} className="mt-2">
@@ -1746,138 +1717,112 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Ingresos Totales por Temporada</Card.Title>
                 <canvas id="ingresosChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button
-                  onClick={generarReporteIngresosTemporada}
-                  className="btn btn-primary"
-                >
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteIngresosTemporada} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button
-                  onClick={generarReporteIngresosTemporadaImg}
-                  className="btn btn-success"
-                >
+                <Button onClick={generarReporteIngresosTemporadaImg} className="btn btn-success mb-2">
                   Generar reporte imagen
                 </Button>
-
                 <Button variant="secondary" onClick={enviarCorreo5} className="mt-2">
                   Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
           </Col>
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Ingresos Totales por Año</Card.Title>
                 <canvas id="ingresosAnioChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button
-                  onClick={generarReporteIngresosAnio}
-                  className="btn btn-primary"
-                >
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteIngresosAnio} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button
-                  onClick={generarReporteIngresosAnioImg}
-                  className="btn btn-success"
-                >
+                <Button onClick={generarReporteIngresosAnioImg} className="btn btn-success mb-2">
                   Generar reporte imagen
                 </Button>
-
                 <Button variant="secondary" onClick={enviarCorreo6} className="mt-2">
                   Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
           </Col>
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Promedio de Días de Estancia por Cliente</Card.Title>
                 <canvas id="promedioDiasEstanciaChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button onClick={generarReportePromedioDiasEstancia} className="btn btn-primary">
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReportePromedioDiasEstancia} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button onClick={generarReportePromedioDiasEstanciaImg} className="btn btn-primary">
+                <Button onClick={generarReportePromedioDiasEstanciaImg} className="btn btn-success mb-2">
                   Generar reporte con gráfico
                 </Button>
-
                 <Button variant="secondary" onClick={enviarCorreo7} className="mt-2">
                   Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
           </Col>
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Número de Reservas por Habitación</Card.Title>
                 <canvas id="numeroReservasChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button onClick={generarReporteNumeroReservas} className="btn btn-primary">
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteNumeroReservas} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button onClick={generarReporteNumeroReservasImg} className="btn btn-success">
+                <Button onClick={generarReporteNumeroReservasImg} className="btn btn-success mb-2">
                   Generar reporte con imagen
                 </Button>
-
                 <Button variant="secondary" onClick={enviarCorreo8} className="mt-2">
                   Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
           </Col>
-
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Habitaciones Disponibles</Card.Title>
                 <canvas id="habitacionesChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button onClick={generarReporteHabitaciones} className="btn btn-primary">
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteHabitaciones} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button onClick={generarReporteHabitacionesImg} className="btn btn-success">
+                <Button onClick={generarReporteHabitacionesImg} className="btn btn-success mb-2">
                   Generar reporte con imagen
                 </Button>
-
                 <Button variant="secondary" onClick={enviarCorreo9} className="mt-2">
                   Enviar por Correo
                 </Button>
               </Card.Body>
             </Card>
           </Col>
-
-
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Número de Reservas por Mes</Card.Title>
                 <canvas id="reservasPorMesChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button onClick={generarReporteReservasPorMes} className="btn btn-primary">
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteReservasPorMes} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button onClick={generarReporteReservasPorMesImg} className="btn btn-success">
+                <Button onClick={generarReporteReservasPorMesImg} className="btn btn-success mb-2">
                   Generar reporte con imagen
                 </Button>
                 <Button variant="secondary" onClick={enviarCorreo10} className="mt-2">
@@ -1886,19 +1831,17 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
-
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Número de Reservas por Tipo de Habitación</Card.Title>
                 <canvas id="reservasPorTipoChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button onClick={generarReporteReservasPorTipo} className="btn btn-primary">
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteReservasPorTipo} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button onClick={generarReporteReservasPorTipoImg} className="btn btn-success">
+                <Button onClick={generarReporteReservasPorTipoImg} className="btn btn-success mb-2">
                   Generar reporte con imagen
                 </Button>
                 <Button variant="secondary" onClick={enviarCorreo11} className="mt-2">
@@ -1907,18 +1850,17 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
-
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
                 <Card.Title>Tasa de Ocupación Mensual</Card.Title>
                 <canvas id="tasaOcupacionMensualChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex justify-content-between">
-                <Button onClick={generarReporteTasaOcupacionMensual} className="btn btn-primary">
+              <Card.Body className="d-flex flex-column align-items-stretch">
+                <Button onClick={generarReporteTasaOcupacionMensual} className="btn btn-primary mb-2">
                   Generar reporte
                 </Button>
-                <Button onClick={generarReporteTasaOcupacionMensualImg} className="btn btn-success">
+                <Button onClick={generarReporteTasaOcupacionMensualImg} className="btn btn-success mb-2">
                   Generar reporte con imagen
                 </Button>
                 <Button variant="secondary" onClick={enviarCorreo12} className="mt-2">
@@ -1931,6 +1873,7 @@ function Estadisticas() {
       </Container>
     </div>
   );
+
 
 }
 export default Estadisticas;
