@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "jasmine-reporters": "^2.5.2",
+    "jasmine-spec-reporter": "^7.0.0"
+  }
+}
