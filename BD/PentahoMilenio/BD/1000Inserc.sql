@@ -59,8 +59,7 @@ VALUES
 (9, 109, 3, 4, 1, 120, 'imagen9.jpg'),
 (10, 110, 4, 2, 1, 200, 'imagen10.jpg');
 
-
--- Inserciones aleatorias en la tabla ReservacionEstancia para 100 registros
+-- Inserciones aleatorias en la tabla ReservacionEstancia para 11 registros
 INSERT INTO ReservacionEstancia (ID_cliente, F_entrada, F_salida, ID_Empleado, TipoServicio, EstadoReserva)
 SELECT 
     FLOOR(1 + RAND() * 5), -- ID_cliente aleatorio entre 1 y 5
@@ -92,18 +91,18 @@ CROSS JOIN
 CROSS JOIN 
     (SELECT 1 AS dummy UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10) AS y 
 LIMIT 
-    1;
+    11;
 
--- Inserciones aleatorias en la tabla DetalleReservacion para 100 registros
+-- Inserciones en la tabla DetalleReservacion para 11 registros, asegurando que las habitaciones no estén ocupadas
 INSERT INTO DetalleReservacion (ID_ReservaEstancia, ID_Habitacion)
 SELECT 
     re.ID_ReservaEstancia,
     h.ID_Habitacion
 FROM 
-    (SELECT ID_ReservaEstancia, F_entrada, F_salida, ROW_NUMBER() OVER (ORDER BY RAND()) AS row_num FROM ReservacionEstancia) AS re
-CROSS JOIN 
-    (SELECT ID_Habitacion, ROW_NUMBER() OVER (ORDER BY RAND()) AS row_num FROM Habitacion ORDER BY RAND() LIMIT 10) AS h
-WHERE 
+    (SELECT ID_ReservaEstancia, F_entrada, F_salida FROM ReservacionEstancia ORDER BY RAND() LIMIT 11) AS re
+JOIN 
+    (SELECT ID_Habitacion FROM Habitacion WHERE ID_Estado = 1 ORDER BY RAND() LIMIT 11) AS h
+ON
     NOT EXISTS (
         SELECT 1 
         FROM DetalleReservacion dr 
@@ -112,18 +111,10 @@ WHERE
         AND re2.F_entrada < re.F_salida 
         AND re2.F_salida > re.F_entrada
     )
-AND re.row_num = h.row_num -- Asegurarse de que las filas seleccionadas tengan el mismo número de fila
-AND NOT EXISTS (
-    SELECT 1 
-    FROM DetalleReservacion dr2 
-    WHERE dr2.ID_ReservaEstancia = re.ID_ReservaEstancia
-)
-LIMIT 
-    1;
+LIMIT 11;
 
-
--- Actualizar el estado de las habitaciones a "ocupado"
+-- Actualizar el estado de las habitaciones a "Ocupado"
 UPDATE Habitacion h
 JOIN DetalleReservacion dr ON h.ID_Habitacion = dr.ID_Habitacion
 JOIN ReservacionEstancia re ON dr.ID_ReservaEstancia = re.ID_ReservaEstancia
-SET h.ID_Estado = '2';
+SET h.ID_Estado = 2;
