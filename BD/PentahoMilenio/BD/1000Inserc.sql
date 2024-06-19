@@ -59,7 +59,9 @@ VALUES
 (9, 109, 3, 4, 1, 120, 'imagen9.jpg'),
 (10, 110, 4, 2, 1, 200, 'imagen10.jpg');
 
--- Inserciones aleatoriass en la tabla ReservacionEstancia para 11 registros
+
+
+-- Inserciones aleatorias en la tabla ReservacionEstancia para 11 registros
 INSERT INTO ReservacionEstancia (ID_cliente, F_entrada, F_salida, ID_Empleado, TipoServicio, EstadoReserva)
 SELECT 
     FLOOR(1 + RAND() * 5), -- ID_cliente aleatorio entre 1 y 5
@@ -93,28 +95,37 @@ CROSS JOIN
 LIMIT 
     11;
 
--- Inserciones en la tabla DetalleReservacion para 11 registros, asegurando que las habitaciones no estén ocupadas
+-- Obtener los últimos 11 IDs de ReservacionEstancia
+SET @id_inicio = (SELECT MAX(ID_ReservaEstancia) FROM ReservacionEstancia) - 10;
+
+-- Seleccionar las últimas 11 habitaciones disponibles
+-- Obtener las IDs de habitaciones disponibles y aleatorias
+SELECT @id_habitaciones := GROUP_CONCAT(ID_Habitacion ORDER BY RAND() SEPARATOR ',')
+FROM Habitacion
+WHERE ID_Estado = 1
+LIMIT 11;
+
+
+-- Insertar en DetalleReservacion las combinaciones únicas de ID_ReservaEstancia e ID_Habitacion
 INSERT INTO DetalleReservacion (ID_ReservaEstancia, ID_Habitacion)
 SELECT 
     re.ID_ReservaEstancia,
-    h.ID_Habitacion
+    SUBSTRING_INDEX(SUBSTRING_INDEX(@id_habitaciones, ',', re.row_num), ',', -1) AS ID_Habitacion
 FROM 
-    (SELECT ID_ReservaEstancia, F_entrada, F_salida FROM ReservacionEstancia ORDER BY RAND() LIMIT 11) AS re
-JOIN 
-    (SELECT ID_Habitacion FROM Habitacion WHERE ID_Estado = 1 ORDER BY RAND() LIMIT 11) AS h
-ON
-    NOT EXISTS (
-        SELECT 1 
-        FROM DetalleReservacion dr 
-        JOIN ReservacionEstancia re2 ON dr.ID_ReservaEstancia = re2.ID_ReservaEstancia 
-        WHERE dr.ID_Habitacion = h.ID_Habitacion 
-        AND re2.F_entrada < re.F_salida 
-        AND re2.F_salida > re.F_entrada
-    )
-LIMIT 11;
+    (SELECT ID_ReservaEstancia, ROW_NUMBER() OVER (ORDER BY ID_ReservaEstancia) AS row_num 
+     FROM ReservacionEstancia 
+     WHERE ID_ReservaEstancia >= @id_inicio 
+     ORDER BY ID_ReservaEstancia 
+     LIMIT 11) AS re
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM DetalleReservacion dr 
+    WHERE dr.ID_ReservaEstancia = re.ID_ReservaEstancia
+);
 
--- Actualizar el estado de las habitaciones a "Ocupado"
+-- Actualizar el estado de las habitaciones a "Ocupado" solo para las habitaciones seleccionadas en DetalleReservacion
 UPDATE Habitacion h
 JOIN DetalleReservacion dr ON h.ID_Habitacion = dr.ID_Habitacion
 JOIN ReservacionEstancia re ON dr.ID_ReservaEstancia = re.ID_ReservaEstancia
 SET h.ID_Estado = 2;
+
