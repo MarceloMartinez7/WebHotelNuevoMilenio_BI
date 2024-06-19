@@ -6,7 +6,7 @@ import html2canvas from "html2canvas";
 import Chart from "chart.js/auto";
 import emailjs from "emailjs-com";
 import * as XLSX from "xlsx";
-import { FaFileExcel } from "react-icons/fa6";
+import { FaFileExcel, FaChartLine , FaRegFilePdf, FaEnvelopeCircleCheck } from "react-icons/fa6";
 
 function Estadisticas() {
   const [productos, setProductos] = useState([]);
@@ -1891,25 +1891,25 @@ function Estadisticas() {
                 <Card.Title>Estado de Reserva</Card.Title>
                 <canvas id="myChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteAlmacen}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteAlmacenImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte con imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
 
                 <Button
@@ -1928,25 +1928,25 @@ function Estadisticas() {
                 <Card.Title>Reservaciones cliente</Card.Title>
                 <canvas id="myReservations" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteClientes}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteReservacionesImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte con imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo2}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
 
                 <Button
@@ -1965,25 +1965,25 @@ function Estadisticas() {
                 <Card.Title>Tasa de Ocupación por Temporada</Card.Title>
                 <canvas id="ocupacionChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteOcupacionTemporada}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteOcupacionImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte con imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo3}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
                 
 
@@ -2003,25 +2003,25 @@ function Estadisticas() {
                 <Card.Title>Tasa de Ocupación por Día de la Semana</Card.Title>
                 <canvas id="ocupacionPorDiaSemanaChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteOcupacionDiaSemana}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteOcupacionDiaSemanaImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo4}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
 
 
@@ -2044,25 +2044,25 @@ function Estadisticas() {
                 <Card.Title>Ingresos Totales por Temporada</Card.Title>
                 <canvas id="ingresosChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteIngresosTemporada}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteIngresosTemporadaImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo5}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
 
                 
@@ -2083,25 +2083,25 @@ function Estadisticas() {
                 <Card.Title>Ingresos Totales por Año</Card.Title>
                 <canvas id="ingresosAnioChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteIngresosAnio}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteIngresosAnioImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo6}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
                 
 
@@ -2123,25 +2123,25 @@ function Estadisticas() {
                 </Card.Title>
                 <canvas id="promedioDiasEstanciaChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReportePromedioDiasEstancia}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReportePromedioDiasEstanciaImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte con gráfico
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo7}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
                 
 
@@ -2161,25 +2161,25 @@ function Estadisticas() {
                 <Card.Title>Número de Reservas por Habitación</Card.Title>
                 <canvas id="numeroReservasChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteNumeroReservas}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteNumeroReservasImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte con imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo8}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
                 
 
@@ -2199,25 +2199,25 @@ function Estadisticas() {
                 <Card.Title>Habitaciones Disponibles</Card.Title>
                 <canvas id="habitacionesChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteHabitaciones}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteHabitacionesImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte con imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo9}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
                 
 
@@ -2237,25 +2237,25 @@ function Estadisticas() {
                 <Card.Title>Número de Reservas por Mes</Card.Title>
                 <canvas id="reservasPorMesChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteReservasPorMes}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteReservasPorMesImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte con imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo10}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
                 
 
@@ -2277,25 +2277,25 @@ function Estadisticas() {
                 </Card.Title>
                 <canvas id="reservasPorTipoChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteReservasPorTipo}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteReservasPorTipoImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte con imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo11}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
                 
 
@@ -2315,25 +2315,25 @@ function Estadisticas() {
                 <Card.Title>Tasa de Ocupación Mensual</Card.Title>
                 <canvas id="tasaOcupacionMensualChart" height="250"></canvas>
               </Card.Body>
-              <Card.Body className="d-flex flex-column align-items-stretch">
+              <Card.Body>
                 <Button
                   onClick={generarReporteTasaOcupacionMensual}
-                  className="btn btn-primary mb-2"
+                  className="btn btn-primary m-1"
                 >
-                  Generar reporte
+                   <FaChartLine  style={{ color: "white" }} />
                 </Button>
                 <Button
                   onClick={generarReporteTasaOcupacionMensualImg}
-                  className="btn btn-success mb-2"
+                  className="btn btn-success m-1"
                 >
-                  Generar reporte con imagen
+                  <FaRegFilePdf style={{ color: "white" }} />
                 </Button>
                 <Button
                   variant="secondary"
                   onClick={enviarCorreo12}
-                  className="mt-2"
+                  className="m-1"
                 >
-                  Enviar por Correo
+                  <FaEnvelopeCircleCheck style={{ color: "white" }} />
                 </Button>
                 
 
