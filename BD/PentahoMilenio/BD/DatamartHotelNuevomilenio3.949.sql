@@ -39,7 +39,7 @@ CREATE TABLE Dim_Tiempo (
 );
 
 
-ALTER TABLE Dim_Tiempo CHANGE Fecha Fecha Date;
+
 
 CREATE TABLE Dim_ReservaEstancia (
     ID_ReservaEstancia INT PRIMARY KEY,
@@ -59,8 +59,10 @@ CREATE TABLE Hecho_DetalleReservaciones (
     ID_Cliente INT,
     ID_Empleado INT,
     ID_Tiempo INT,
-    F_salida INT,
+    ID_Fsalida INT,
     Precio INT,
+    F_entrada Date,
+    F_salida Date,
     FOREIGN KEY (ID_ReservaEstancia) REFERENCES Dim_ReservaEstancia(ID_ReservaEstancia),
     FOREIGN KEY (ID_Habitacion) REFERENCES Dim_Habitaciones(ID_Habitacion),
     FOREIGN KEY (ID_Tiempo) REFERENCES Dim_Tiempo(ID_Tiempo),
