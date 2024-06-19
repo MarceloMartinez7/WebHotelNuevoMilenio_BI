@@ -59,7 +59,7 @@ VALUES
 (9, 109, 3, 4, 1, 120, 'imagen9.jpg'),
 (10, 110, 4, 2, 1, 200, 'imagen10.jpg');
 
--- Inserciones aleatorias en la tabla ReservacionEstancia para 11 registros
+-- Inserciones aleatoriass en la tabla ReservacionEstancia para 11 registros
 INSERT INTO ReservacionEstancia (ID_cliente, F_entrada, F_salida, ID_Empleado, TipoServicio, EstadoReserva)
 SELECT 
     FLOOR(1 + RAND() * 5), -- ID_cliente aleatorio entre 1 y 5
