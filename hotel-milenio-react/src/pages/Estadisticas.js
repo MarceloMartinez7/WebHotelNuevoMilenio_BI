@@ -703,6 +703,10 @@ function Estadisticas() {
       );
   }, []);
 
+
+
+
+
   useEffect(() => {
     if (tasaOcupacionMensual.length > 0) {
       if (tasaOcupacionMensualChartRef.current !== null) {
@@ -757,6 +761,21 @@ function Estadisticas() {
 
     tasaOcupacionMensualChartRef.current = chart;
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     if (reservasPorTipo.length > 0) {
@@ -1182,6 +1201,9 @@ function Estadisticas() {
     ocupacionChartRef.current = chart;
   };
 
+
+
+
   useEffect(() => {
     if (tasaOcupacionPorDiaSemana.length > 0) {
       if (ocupacionPorDiaSemanaChartRef.current !== null) {
@@ -1277,6 +1299,9 @@ function Estadisticas() {
     }
   }, [ingresosPorTemporada]);
 
+
+
+  
   useEffect(() => {
     if (ingresosPorAnio.length > 0) {
       const ctx = document.getElementById("ingresosAnioChart");
@@ -1315,6 +1340,9 @@ function Estadisticas() {
     }
   }, [ingresosPorAnio]);
 
+
+
+
   const generarReporteTasaOcupacionMensual = () => {
     fetch("http://localhost:5000/crudDb2/TasaOcupacionMensual")
       .then((response) => response.json())
@@ -1351,6 +1379,9 @@ function Estadisticas() {
       );
   };
 
+
+
+
   const generarReporteTasaOcupacionMensualImg = async () => {
     try {
       const canvas = await html2canvas(
@@ -1364,6 +1395,9 @@ function Estadisticas() {
     } catch (error) {
       console.error("Error al generar el reporte con imagen:", error);
     }
+
+
+
   };
 
   const generarReporteReservasPorTipo = () => {
@@ -1885,6 +1919,8 @@ function Estadisticas() {
       <Header />
       <Container className="margen-contenedor">
         <Row className="g-3">
+
+
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
@@ -1922,6 +1958,10 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
+
+
+
+
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>
@@ -2077,6 +2117,9 @@ function Estadisticas() {
               </Card.Body>
             </Card>
           </Col>
+
+
+          
           <Col sm="6" md="6" lg="4">
             <Card>
               <Card.Body>

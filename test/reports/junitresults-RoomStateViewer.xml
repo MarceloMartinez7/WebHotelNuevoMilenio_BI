@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="1" tests="3" time="0.005">
- <testsuite name="Room State Viewer" timestamp="2024-06-17T21:19:11" hostname="localhost" time="0.005" errors="0" tests="3" skipped="0" disabled="0" failures="1">
-  <testcase classname="Room State Viewer" name="should return the status of all rooms" time="0.003">
-   <failure type="toEqual" message="Expected $[2].status = &apos;cleaning&apos; to equal &apos;available&apos;."><![CDATA[at <Jasmine>
-    at UserContext.<anonymous> (C:\Users\Usuario\Desktop\Hotel Nuevo Milenio\WebHotelNuevoMilenio_BI\test\spec\jasmine_Spec\visualizarestadoSpec.js:24:32)
-    at <Jasmine>]]>
-   </failure>
-  </testcase>
+<testsuites disabled="0" errors="0" failures="0" tests="3" time="0.006">
+ <testsuite name="Room State Viewer" timestamp="2024-06-18T23:15:52" hostname="localhost" time="0.006" errors="0" tests="3" skipped="0" disabled="0" failures="0">
+  <testcase classname="Room State Viewer" name="should return the correct status for a given room number" time="0.004" />
   <testcase classname="Room State Viewer" name="should update the status of a given room number" time="0.001" />
-  <testcase classname="Room State Viewer" name="should return the correct status for a given room number" time="0.001" />
+  <testcase classname="Room State Viewer" name="should return the status of all rooms" time="0.001" />
  </testsuite>
 </testsuites>
