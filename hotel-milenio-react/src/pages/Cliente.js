@@ -5,7 +5,7 @@ import '../styles/App.css';
 
 function Cliente() {
 
-    // Crear un estado para cada campo del formulario
+    // Crear un estado para cada campo del formularios
     const [Nombre1, setNombre1] = useState('');
     const [Nombre2, setNombre2] = useState('');
     const [Apellido1, setApellido1] = useState('');
