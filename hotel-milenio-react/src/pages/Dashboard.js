@@ -15,7 +15,7 @@ function Dashboard() {
           <Col sm="12" md="12" lg="12">
             <Card>
               <Card.Body>
-                <Card.Title>Estado del almacen</Card.Title>
+                <Card.Title>Estado del Hotel</Card.Title>
                 <iframe
                   title="HotelMilenioKpiPrueba1"
                   width="100%"
