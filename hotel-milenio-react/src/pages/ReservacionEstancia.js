@@ -322,7 +322,7 @@ function ReservacionEstancia() {
                                             <option>Seleccione la habitacion</option>
                                             {habitaciones.map((habitacion) => (
                                                 <option key={habitacion.ID_Habitacion} value={habitacion.NombreHabitacion}>
-                                                    {habitacion.NombreHabitacion}
+                                                    {habitacion.NombreHabitacion} {habitacion.ID_Habitacion}
                                                 </option>
                                             ))}
                                         </Form.Select>

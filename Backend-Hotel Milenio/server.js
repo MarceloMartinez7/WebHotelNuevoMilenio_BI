@@ -15,7 +15,7 @@ app.use(express.json({ limit: '50mb' }));
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Marcelox2021',
+  password: 'Yamilg620',
   database: 'db_hotelmilenio',
 });
 
@@ -30,7 +30,7 @@ db.connect((err) => {
 const db2 = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Marcelox2021',
+  password: 'Yamilg620',
   database: 'hechosmilenio',
 });
 

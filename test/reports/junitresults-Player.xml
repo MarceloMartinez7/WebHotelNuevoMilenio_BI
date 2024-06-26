@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="0" tests="5" time="0.013">
- <testsuite name="Player" timestamp="2024-06-18T23:15:52" hostname="localhost" time="0.008" errors="0" tests="2" skipped="0" disabled="0" failures="0">
-  <testcase classname="Player" name="should be able to play a Song" time="0.001" />
-  <testcase classname="Player" name="tells the current song if the user has made it a favorite" time="0.001" />
+<testsuites disabled="0" errors="0" failures="0" tests="5" time="0.036">
+ <testsuite name="Player" timestamp="2024-06-24T21:28:57" hostname="localhost" time="0.021" errors="0" tests="2" skipped="0" disabled="0" failures="0">
+  <testcase classname="Player" name="should be able to play a Song" time="0" />
+  <testcase classname="Player" name="tells the current song if the user has made it a favorite" time="0.005" />
  </testsuite>
- <testsuite name="Player.#resume" timestamp="2024-06-18T23:15:52" hostname="localhost" time="0.003" errors="0" tests="1" skipped="0" disabled="0" failures="0">
-  <testcase classname="Player.#resume" name="should throw an exception if song is already playing" time="0.002" />
+ <testsuite name="Player.#resume" timestamp="2024-06-24T21:28:57" hostname="localhost" time="0.003" errors="0" tests="1" skipped="0" disabled="0" failures="0">
+  <testcase classname="Player.#resume" name="should throw an exception if song is already playing" time="0.003" />
  </testsuite>
- <testsuite name="Player.when song has been paused" timestamp="2024-06-18T23:15:52" hostname="localhost" time="0.002" errors="0" tests="2" skipped="0" disabled="0" failures="0">
-  <testcase classname="Player.when song has been paused" name="should indicate that the song is currently paused" time="0.001" />
-  <testcase classname="Player.when song has been paused" name="should be possible to resume" time="0" />
+ <testsuite name="Player.when song has been paused" timestamp="2024-06-24T21:28:57" hostname="localhost" time="0.012" errors="0" tests="2" skipped="0" disabled="0" failures="0">
+  <testcase classname="Player.when song has been paused" name="should indicate that the song is currently paused" time="0.008" />
+  <testcase classname="Player.when song has been paused" name="should be possible to resume" time="0.002" />
  </testsuite>
 </testsuites>

@@ -443,7 +443,7 @@
     <database>DB_HotelMilenio</database>
     <port>3306</port>
     <username>root</username>
-    <password>Encrypted 2be98afc827c68087ae15a1688cc2fd8b</password>
+    <password>Encrypted 2be98afc86aa7f2bdaa14a77cd9c4fd8a</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -501,12 +501,12 @@
   <order>
     <hop>
       <from>TableHechosDetalleReser</from>
-      <to>Table output</to>
+      <to>Table outputEchosMilenio</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Table output</name>
+    <name>Table outputEchosMilenio</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -613,7 +613,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_NI</date_format_locale>
+        <date_format_locale>es_MX</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -636,7 +636,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_NI</date_format_locale>
+        <date_format_locale>es_MX</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -659,7 +659,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_NI</date_format_locale>
+        <date_format_locale>es_MX</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -682,7 +682,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_NI</date_format_locale>
+        <date_format_locale>es_MX</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -705,7 +705,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_NI</date_format_locale>
+        <date_format_locale>es_MX</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -728,18 +728,18 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_NI</date_format_locale>
+        <date_format_locale>es_MX</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>F_salida</name>
+        <name>ID_Fsalida</name>
         <length>9</length>
         <precision>-1</precision>
         <origin>TableHechosDetalleReser</origin>
-        <comments>F_salida</comments>
+        <comments>ID_Fsalida</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -751,7 +751,7 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_NI</date_format_locale>
+        <date_format_locale>es_MX</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
@@ -774,7 +774,53 @@ INNER JOIN
         <sort_descending>N</sort_descending>
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_NI</date_format_locale>
+        <date_format_locale>es_MX</date_format_locale>
+        <date_format_timezone>America/Managua</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>F_entrada</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>TableHechosDetalleReser</origin>
+        <comments>F_entrada</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>es_MX</date_format_locale>
+        <date_format_timezone>America/Managua</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>F_salida</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>TableHechosDetalleReser</origin>
+        <comments>F_salida</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>es_MX</date_format_locale>
         <date_format_timezone>America/Managua</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites disabled="0" errors="0" failures="0" tests="4" time="0.003">
- <testsuite name="TariffService" timestamp="2024-06-18T23:15:52" hostname="localhost" time="0.003" errors="0" tests="4" skipped="0" disabled="0" failures="0">
+ <testsuite name="TariffService" timestamp="2024-06-24T21:28:57" hostname="localhost" time="0.003" errors="0" tests="4" skipped="0" disabled="0" failures="0">
   <testcase classname="TariffService" name="should get the correct tariff for a given room and date" time="0.001" />
-  <testcase classname="TariffService" name="should add a tariff successfully with valid data" time="0.001" />
-  <testcase classname="TariffService" name="should return null if no tariff is available for a given room and date" time="0" />
-  <testcase classname="TariffService" name="should not add a tariff with invalid dates or price" time="0" />
+  <testcase classname="TariffService" name="should return null if no tariff is available for a given room and date" time="0.001" />
+  <testcase classname="TariffService" name="should add a tariff successfully with valid data" time="0" />
+  <testcase classname="TariffService" name="should not add a tariff with invalid dates or price" time="0.001" />
  </testsuite>
 </testsuites>
