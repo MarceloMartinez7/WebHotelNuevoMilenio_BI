@@ -20,7 +20,7 @@ function Dashboard() {
                   title="HotelMilenioKpiPrueba1"
                   width="100%"
                   height="600"
-                  src="https://app.powerbi.com/reportEmbed?reportId=787ad203-c018-46f3-adbf-176bca47757e&autoAuth=true&ctid=e47646fe-da27-4518-8436-5f8b158ba127"
+                  src="https://app.powerbi.com/reportEmbed?reportId=c91c57b9-7e5d-4c66-8609-439b26176908&autoAuth=true&ctid=e47646fe-da27-4518-8436-5f8b158ba127"
                   frameborder="0"
                   allowFullScreen="true"
                   style={{ display: 'block', margin: '0 auto' }}
